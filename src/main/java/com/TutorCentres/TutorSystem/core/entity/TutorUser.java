@@ -1,5 +1,7 @@
 package com.TutorCentres.TutorSystem.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -15,7 +17,10 @@ public class TutorUser {
     @Column(name = "email")
     private String email;
     @Column(name = "password")
+    @JsonIgnore
     private String password;
+    @Column
+    private String roles;
     @Column(name = "eng_name")
     private String engName;
     @Column(name = "chinese_name")
@@ -93,10 +98,11 @@ public class TutorUser {
     public TutorUser() {
     }
 
-    public TutorUser(Integer id, String email, String password, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, List<String> tutorAreas, List<String> tutorContent, List<String> tutorLevel, List<String> tutorSpeaking, List<String> tutorMusic, List<String> tutorOtherLevel, String lowestSalary, String idealSalary, List<ExamResult> examResult) {
+    public TutorUser(Integer id, String email, String password, String roles, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, List<String> tutorAreas, List<String> tutorContent, List<String> tutorLevel, List<String> tutorSpeaking, List<String> tutorMusic, List<String> tutorOtherLevel, String lowestSalary, String idealSalary, List<ExamResult> examResult) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.roles = roles;
         this.engName = engName;
         this.chineseName = chineseName;
         this.phone = phone;
@@ -149,6 +155,14 @@ public class TutorUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public String getEngName() {
