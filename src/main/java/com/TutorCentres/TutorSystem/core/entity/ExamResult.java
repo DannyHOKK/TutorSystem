@@ -15,8 +15,7 @@ public class ExamResult {
     public ExamResult() {
     }
 
-    public ExamResult(Integer id, String subject, String grade) {
-        this.id = id;
+    public ExamResult(String subject, String grade) {
         this.subject = subject;
         this.grade = grade;
     }

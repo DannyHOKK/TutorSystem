@@ -1,109 +1,56 @@
-package com.TutorCentres.TutorSystem.core.entity;
+package com.TutorCentres.TutorSystem.core.dto;
 
-import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
+import com.TutorCentres.TutorSystem.core.entity.ExamResult;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "tutor_user")
-public class TutorUser {
+public class TutorRegisterDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name = "email")
     private String email;
-    @Column(name = "password")
-    @JsonIgnore
     private String password;
-    @Column(name = "roles")
-    private String roles;
-    @Column(name = "create_date")
-    private Date createDate;
-    @Column(name = "modify_date")
-    private Date modifyDate;
-    @Column(name = "eng_name")
     private String engName;
-    @Column(name = "chinese_name")
     private String chineseName;
-    @Column(name = "phone")
     private String phone;
-    @Column(name = "hk_id")
     private String hkId;
-    @Column(name = "gender")
     private String gender;
-    @Column(name = "birth_year")
     private LocalDate birthYear;
-    @Column(name = "address")
     private String address;
-    @Column(name = "current_job")
     private String currentJob;
-    @Column(name = "work_experience")
     private String workExperience;
-    @Column(name = "highest_tutor_leve")
     private String highestTutorLevel;
-    @Column(name = "note_provided")
     private Boolean noteProvided;
-    @Column(name = "high_school_lang")
     private String highSchoolLang;
-    @Column(name = "high_school")
     private String highSchool;
-    @Column(name = "high_school_major")
     private String highSchoolMajor;
-    @Column(name = "highest_education")
     private String highestEducation;
-    @Column(name = "university")
     private String university;
-    @Column(name = "current_education_leve")
     private String currentEducationLevel;
-    @Column(name = "university_major")
     private String universityMajor;
-    @Column(name = "hk_open_exam")
     private String hkOpenExam;
+    private List<String> tutorAreas;
+    private List<String> tutorContent;
+    private List<String> tutorLevel;
+    private List<String> tutorSpeaking;
 
-    @Column(name = "tutor_areas")
-    private String tutorAreas;
+    private List<String> tutorMusic;
 
-    @Column(name = "tutor_content")
-    private String tutorContent;
-
-    @Column(name = "tutor_level")
-    private String tutorLevel;
-
-    @Column(name = "tutor_speaking_level")
-    private String tutorSpeaking;
-
-    @Column(name = "tutor_music_level")
-    private String tutorMusic;
-
-    @Column(name = "tutor_other_level")
-    private String tutorOtherLevel;
-    @Column(name = "lowest_salary")
+    private List<String> tutorOtherLevel;
     private String lowestSalary;
-    @Column(name = "ideal_salary")
     private String idealSalary;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "open_exam_result")
     private List<ExamResult> examResult;
+    private String introTitle;
+    private String intro;
 
-    // Constructors, getters, and setters
-
-
-    public TutorUser() {
+    public TutorRegisterDTO() {
     }
 
-    public TutorUser( String email, String password, String roles, Date createDate, Date modifyDate, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, String tutorAreas, String tutorContent, String tutorLevel, String tutorSpeaking, String tutorMusic, String tutorOtherLevel, String lowestSalary, String idealSalary, List<ExamResult> examResult) {
+    public TutorRegisterDTO(String email, String password, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, List<String> tutorAreas, List<String> tutorContent, List<String> tutorLevel, List<String> tutorSpeaking, List<String> tutorMusic, List<String> tutorOtherLevel, String lowestSalary, String idealSalary, List<ExamResult> examResult, String introTitle, String intro) {
         this.email = email;
         this.password = password;
-        this.roles = roles;
-        this.createDate = createDate;
-        this.modifyDate = modifyDate;
         this.engName = engName;
         this.chineseName = chineseName;
         this.phone = phone;
@@ -132,47 +79,8 @@ public class TutorUser {
         this.lowestSalary = lowestSalary;
         this.idealSalary = idealSalary;
         this.examResult = examResult;
-    }
-
-    public TutorUser(TutorRegisterDTO tutorRegisterDTO) {
-        this.email = tutorRegisterDTO.getEmail();
-        this.password = tutorRegisterDTO.getPassword();
-        this.engName = tutorRegisterDTO.getEngName();
-        this.chineseName = tutorRegisterDTO.getChineseName();
-        this.phone = tutorRegisterDTO.getPhone();
-        this.hkId = tutorRegisterDTO.getHkId();
-        this.gender = tutorRegisterDTO.getGender();
-        this.birthYear = tutorRegisterDTO.getBirthYear();
-        this.address = tutorRegisterDTO.getAddress();
-        this.currentJob = tutorRegisterDTO.getCurrentJob();
-        this.workExperience = tutorRegisterDTO.getWorkExperience();
-        this.highestTutorLevel = tutorRegisterDTO.getHighestTutorLevel();
-        this.noteProvided = tutorRegisterDTO.getNoteProvided();
-        this.highSchoolLang = tutorRegisterDTO.getHighSchoolLang();
-        this.highSchool = tutorRegisterDTO.getHighSchool();
-        this.highSchoolMajor = tutorRegisterDTO.getHighSchoolMajor();
-        this.highestEducation = tutorRegisterDTO.getHighestEducation();
-        this.university = tutorRegisterDTO.getUniversity();
-        this.currentEducationLevel = tutorRegisterDTO.getCurrentEducationLevel();
-        this.universityMajor = tutorRegisterDTO.getUniversityMajor();
-        this.hkOpenExam = tutorRegisterDTO.getHkOpenExam();
-//        this.tutorAreas = tutorAreas;
-//        this.tutorContent = tutorContent;
-//        this.tutorLevel = tutorLevel;
-//        this.tutorSpeaking = tutorSpeaking;
-//        this.tutorMusic = tutorMusic;
-//        this.tutorOtherLevel = tutorOtherLevel;
-        this.lowestSalary = tutorRegisterDTO.getLowestSalary();
-        this.idealSalary = tutorRegisterDTO.getIdealSalary();
-//        this.examResult = examResult;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        this.introTitle = introTitle;
+        this.intro = intro;
     }
 
     public String getEmail() {
@@ -189,30 +97,6 @@ public class TutorUser {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
     }
 
     public String getEngName() {
@@ -367,51 +251,51 @@ public class TutorUser {
         this.hkOpenExam = hkOpenExam;
     }
 
-    public String getTutorAreas() {
+    public List<String> getTutorAreas() {
         return tutorAreas;
     }
 
-    public void setTutorAreas(String tutorAreas) {
+    public void setTutorAreas(List<String> tutorAreas) {
         this.tutorAreas = tutorAreas;
     }
 
-    public String getTutorContent() {
+    public List<String> getTutorContent() {
         return tutorContent;
     }
 
-    public void setTutorContent(String tutorContent) {
+    public void setTutorContent(List<String> tutorContent) {
         this.tutorContent = tutorContent;
     }
 
-    public String getTutorLevel() {
+    public List<String> getTutorLevel() {
         return tutorLevel;
     }
 
-    public void setTutorLevel(String tutorLevel) {
+    public void setTutorLevel(List<String> tutorLevel) {
         this.tutorLevel = tutorLevel;
     }
 
-    public String getTutorSpeaking() {
+    public List<String> getTutorSpeaking() {
         return tutorSpeaking;
     }
 
-    public void setTutorSpeaking(String tutorSpeaking) {
+    public void setTutorSpeaking(List<String> tutorSpeaking) {
         this.tutorSpeaking = tutorSpeaking;
     }
 
-    public String getTutorMusic() {
+    public List<String> getTutorMusic() {
         return tutorMusic;
     }
 
-    public void setTutorMusic(String tutorMusic) {
+    public void setTutorMusic(List<String> tutorMusic) {
         this.tutorMusic = tutorMusic;
     }
 
-    public String getTutorOtherLevel() {
+    public List<String> getTutorOtherLevel() {
         return tutorOtherLevel;
     }
 
-    public void setTutorOtherLevel(String tutorOtherLevel) {
+    public void setTutorOtherLevel(List<String> tutorOtherLevel) {
         this.tutorOtherLevel = tutorOtherLevel;
     }
 
@@ -437,5 +321,21 @@ public class TutorUser {
 
     public void setExamResult(List<ExamResult> examResult) {
         this.examResult = examResult;
+    }
+
+    public String getIntroTitle() {
+        return introTitle;
+    }
+
+    public void setIntroTitle(String introTitle) {
+        this.introTitle = introTitle;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 }

@@ -24,7 +24,7 @@ public class SwaggerConfig {
                 .pathMapping("/")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("HA.DocUploadApplication"))
+                .apis(RequestHandlerSelectors.basePackage("com.TutorCentres.TutorSystem"))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(securitySchemes())

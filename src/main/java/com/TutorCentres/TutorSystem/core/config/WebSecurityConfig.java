@@ -1,6 +1,7 @@
 package com.TutorCentres.TutorSystem.core.config;
 
 import com.TutorCentres.TutorSystem.Tutor.service.impl.TutorDetailsServiceImpl;
+import com.TutorCentres.TutorSystem.core.security.filter.JwtAuthorizationFilter;
 import com.TutorCentres.TutorSystem.core.security.handler.AuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,18 +44,18 @@ public class WebSecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-//    @Bean
-//    public JwtAuthorizationFilter authorizationFilter(){
-//        return new JwtAuthorizationFilter();
-//    }
+    @Bean
+    public JwtAuthorizationFilter authorizationFilter(){
+        return new JwtAuthorizationFilter();
+    }
 
 
     @Bean
     public SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/admin/**").permitAll()
-                .antMatchers("/admin/signup").permitAll()
+                .antMatchers("/api/tutor/**").permitAll()
+                .antMatchers("/api/tutor/signup").permitAll()
 //                .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow access to Swagger UI
 //                .antMatchers("/doc.html","/doc.html/**").permitAll()
                 .antMatchers("/",
@@ -81,7 +82,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.authenticationProvider(daoAuthenticationProvider());
-//        httpSecurity.addFilterBefore(authorizationFilter(), LogoutFilter.class);
+        httpSecurity.addFilterBefore(authorizationFilter(), LogoutFilter.class);
 
         return httpSecurity.build();
     }
