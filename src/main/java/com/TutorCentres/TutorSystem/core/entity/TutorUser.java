@@ -136,7 +136,7 @@ public class TutorUser {
 
     public TutorUser(TutorRegisterDTO tutorRegisterDTO) {
         this.email = tutorRegisterDTO.getEmail();
-        this.password = tutorRegisterDTO.getPassword();
+//        this.password = tutorRegisterDTO.getPassword();
         this.engName = tutorRegisterDTO.getEngName();
         this.chineseName = tutorRegisterDTO.getChineseName();
         this.phone = tutorRegisterDTO.getPhone();

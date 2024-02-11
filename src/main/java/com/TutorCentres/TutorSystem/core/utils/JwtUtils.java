@@ -1,7 +1,8 @@
 package com.TutorCentres.TutorSystem.core.utils;
 
-import com.TutorCentres.TutorSystem.Tutor.repository.TutorRepository;
-import com.TutorCentres.TutorSystem.core.entity.TutorUser;
+import com.TutorCentres.TutorSystem.Auth.repository.TutorRepository;
+import com.TutorCentres.TutorSystem.core.dto.StudentUserDetail;
+import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,21 @@ public class JwtUtils{
     private TutorRepository tutorRepository;
 
     public static String buildJwt(Authentication authentication){
-        TutorUser user = (TutorUser) authentication.getPrincipal();
+        TutorUserDetail user = (TutorUserDetail) authentication.getPrincipal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("email", user.getEmail());
+
+        return Jwts.builder()
+                .setSubject(user.getEmail())
+                .setClaims(map)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(7)))
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    };
+
+    public static String buildStudentJwt(Authentication authentication){
+        StudentUserDetail user = (StudentUserDetail) authentication.getPrincipal();
         Map<String, Object> map = new HashMap<>();
         map.put("email", user.getEmail());
 

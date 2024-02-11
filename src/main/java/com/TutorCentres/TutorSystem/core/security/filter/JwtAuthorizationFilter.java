@@ -1,8 +1,7 @@
 package com.TutorCentres.TutorSystem.core.security.filter;
 
-import com.TutorCentres.TutorSystem.Tutor.service.impl.TutorDetailsServiceImpl;
+import com.TutorCentres.TutorSystem.Auth.service.impl.TutorDetailsServiceImpl;
 import com.TutorCentres.TutorSystem.core.utils.JwtUtils;
-import com.TutorCentres.TutorSystem.core.utils.SpringContextUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;

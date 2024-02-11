@@ -1,6 +1,5 @@
 package com.TutorCentres.TutorSystem.core.config;
 
-import com.TutorCentres.TutorSystem.Tutor.service.impl.TutorDetailsServiceImpl;
 import com.TutorCentres.TutorSystem.core.security.filter.JwtAuthorizationFilter;
 import com.TutorCentres.TutorSystem.core.security.handler.AuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,7 @@ public class WebSecurityConfig {
     private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
-    private TutorDetailsServiceImpl tutorDetailsService;
-
+    private CustomUserDetailsService customUserDetailsService;
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -35,7 +33,7 @@ public class WebSecurityConfig {
     public DaoAuthenticationProvider daoAuthenticationProvider (){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(tutorDetailsService);
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
         return daoAuthenticationProvider;
     }
 
@@ -55,7 +53,9 @@ public class WebSecurityConfig {
         httpSecurity.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/api/tutor/**").permitAll()
-                .antMatchers("/api/tutor/signup").permitAll()
+                .antMatchers("/api/student/**").permitAll()
+                .antMatchers("/api/student/signup").permitAll()
+                .antMatchers("/api/user/**").permitAll()
 //                .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow access to Swagger UI
 //                .antMatchers("/doc.html","/doc.html/**").permitAll()
                 .antMatchers("/",

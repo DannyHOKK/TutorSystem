@@ -1,13 +1,13 @@
 package com.TutorCentres.TutorSystem.core.dto;
 
-public class TutorUserLoginDTO {
+public class UserLoginDTO {
     private String email;
     private String password;
 
-    public TutorUserLoginDTO() {
+    public UserLoginDTO() {
     }
 
-    public TutorUserLoginDTO(String email, String password) {
+    public UserLoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

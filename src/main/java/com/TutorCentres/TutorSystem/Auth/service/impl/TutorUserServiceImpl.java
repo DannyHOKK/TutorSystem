@@ -1,24 +1,25 @@
-package com.TutorCentres.TutorSystem.Tutor.service.impl;
+package com.TutorCentres.TutorSystem.Auth.service.impl;
 
-import com.TutorCentres.TutorSystem.Tutor.repository.TutorRepository;
-import com.TutorCentres.TutorSystem.Tutor.service.TutorUserService;
+import com.TutorCentres.TutorSystem.Auth.repository.TutorRepository;
+import com.TutorCentres.TutorSystem.Auth.service.TutorUserService;
 import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TutorUserServiceImpl implements TutorUserService {
 
     @Autowired
     private TutorRepository tutorRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public String signUp(TutorRegisterDTO tutorRegisterDTO) {
@@ -52,6 +53,7 @@ public class TutorUserServiceImpl implements TutorUserService {
             tutorUser.setTutorOtherLevel(tutorOtherLevel);
         }
 
+        tutorUser.setPassword(passwordEncoder.encode(tutorRegisterDTO.getPassword()));
         tutorUser.setTutorAreas(areaList);
         tutorUser.setExamResult(tutorRegisterDTO.getExamResult());
         tutorUser.setCreateDate(new Date());
