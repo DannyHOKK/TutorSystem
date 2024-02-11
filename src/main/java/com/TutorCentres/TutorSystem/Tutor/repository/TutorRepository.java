@@ -1,4 +1,4 @@
-package com.TutorCentres.TutorSystem.Auth.repository;
+package com.TutorCentres.TutorSystem.Tutor.repository;
 
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import org.springframework.data.jpa.repository.JpaRepository;

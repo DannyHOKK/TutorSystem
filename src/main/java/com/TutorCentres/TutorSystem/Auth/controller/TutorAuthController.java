@@ -1,6 +1,6 @@
 package com.TutorCentres.TutorSystem.Auth.controller;
 
-import com.TutorCentres.TutorSystem.Auth.service.TutorUserService;
+import com.TutorCentres.TutorSystem.Tutor.service.TutorUserService;
 import com.TutorCentres.TutorSystem.core.dto.JwtResponseDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;

@@ -1,4 +1,4 @@
-package com.TutorCentres.TutorSystem.Auth.service;
+package com.TutorCentres.TutorSystem.Student.service;
 
 
 import com.TutorCentres.TutorSystem.core.dto.StudentRegisterDTO;

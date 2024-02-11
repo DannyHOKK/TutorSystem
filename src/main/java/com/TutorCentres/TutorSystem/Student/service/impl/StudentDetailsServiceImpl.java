@@ -1,6 +1,6 @@
-package com.TutorCentres.TutorSystem.Auth.service.impl;
+package com.TutorCentres.TutorSystem.Student.service.impl;
 
-import com.TutorCentres.TutorSystem.Auth.repository.StudentRepository;
+import com.TutorCentres.TutorSystem.Student.repository.StudentRepository;
 import com.TutorCentres.TutorSystem.core.dto.StudentUserDetail;
 import com.TutorCentres.TutorSystem.core.entity.StudentUser;
 import org.springframework.beans.factory.annotation.Autowired;

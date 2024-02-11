@@ -1,7 +1,7 @@
-package com.TutorCentres.TutorSystem.Auth.service.impl;
+package com.TutorCentres.TutorSystem.Tutor.service.impl;
 
-import com.TutorCentres.TutorSystem.Auth.repository.TutorRepository;
-import com.TutorCentres.TutorSystem.Auth.service.TutorUserService;
+import com.TutorCentres.TutorSystem.Tutor.repository.TutorRepository;
+import com.TutorCentres.TutorSystem.Tutor.service.TutorUserService;
 import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import org.apache.commons.lang3.ObjectUtils;

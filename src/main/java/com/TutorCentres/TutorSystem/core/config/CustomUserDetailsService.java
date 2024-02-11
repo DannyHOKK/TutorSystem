@@ -1,7 +1,7 @@
 package com.TutorCentres.TutorSystem.core.config;
 
-import com.TutorCentres.TutorSystem.Auth.service.impl.StudentDetailsServiceImpl;
-import com.TutorCentres.TutorSystem.Auth.service.impl.TutorDetailsServiceImpl;
+import com.TutorCentres.TutorSystem.Student.service.impl.StudentDetailsServiceImpl;
+import com.TutorCentres.TutorSystem.Tutor.service.impl.TutorDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

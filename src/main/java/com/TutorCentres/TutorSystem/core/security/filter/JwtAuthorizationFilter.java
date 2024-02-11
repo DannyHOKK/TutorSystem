@@ -1,6 +1,6 @@
 package com.TutorCentres.TutorSystem.core.security.filter;
 
-import com.TutorCentres.TutorSystem.Auth.service.impl.TutorDetailsServiceImpl;
+import com.TutorCentres.TutorSystem.Tutor.service.impl.TutorDetailsServiceImpl;
 import com.TutorCentres.TutorSystem.core.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

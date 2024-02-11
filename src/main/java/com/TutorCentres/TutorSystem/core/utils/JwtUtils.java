@@ -1,6 +1,6 @@
 package com.TutorCentres.TutorSystem.core.utils;
 
-import com.TutorCentres.TutorSystem.Auth.repository.TutorRepository;
+import com.TutorCentres.TutorSystem.Tutor.repository.TutorRepository;
 import com.TutorCentres.TutorSystem.core.dto.StudentUserDetail;
 import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
 import io.jsonwebtoken.Jwts;
