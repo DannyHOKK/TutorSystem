@@ -1,11 +1,13 @@
 package com.TutorCentres.TutorSystem.Auth.controller;
 
+import com.TutorCentres.TutorSystem.Auth.service.LoginService;
 import com.TutorCentres.TutorSystem.core.dto.JwtResponseDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
 import com.TutorCentres.TutorSystem.core.dto.UserLoginDTO;
 import com.TutorCentres.TutorSystem.core.utils.JwtUtils;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +22,8 @@ public class LoginController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private LoginService loginService;
 
 
     @PostMapping(value = "/login")
@@ -28,13 +32,10 @@ public class LoginController {
             if (userLoginDTO.getEmail() == null || userLoginDTO.getPassword() == null){
                 return ResultVoUtil.validFail("Please input credential");
             }
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = JwtUtils.buildJwt(authentication);
-            TutorUserDetail tutorUserDetail = (TutorUserDetail) authentication.getPrincipal();
-            JwtResponseDTO jwtResponseDTO = new JwtResponseDTO(jwt,tutorUserDetail.getId(), tutorUserDetail.getEmail(), tutorUserDetail.getAuthorities());
-
+            JwtResponseDTO jwtResponseDTO = loginService.studentTutorLogin(userLoginDTO);
+            if (ObjectUtils.isEmpty(jwtResponseDTO)){
+                return ResultVoUtil.error("User not found");
+            }
             return ResultVoUtil.success("login successfully", jwtResponseDTO);
         }catch (Exception e){
             return ResultVoUtil.error(e);

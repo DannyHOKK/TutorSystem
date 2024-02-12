@@ -1,4 +1,4 @@
-package com.TutorCentres.TutorSystem.Auth.controller;
+package com.TutorCentres.TutorSystem.Student.controller;
 
 import com.TutorCentres.TutorSystem.Student.service.StudentUserService;
 import com.TutorCentres.TutorSystem.core.dto.*;

@@ -1,4 +1,4 @@
-package com.TutorCentres.TutorSystem.Auth.controller;
+package com.TutorCentres.TutorSystem.Tutor.controller;
 
 import com.TutorCentres.TutorSystem.Tutor.service.TutorUserService;
 import com.TutorCentres.TutorSystem.core.dto.JwtResponseDTO;
@@ -40,24 +40,24 @@ public class TutorAuthController {
         }
     }
 
-    @PostMapping(value = "/login")
-    public ResultVO login(@RequestBody UserLoginDTO userLoginDTO){
-        try{
-            if (userLoginDTO.getEmail() == null || userLoginDTO.getPassword() == null){
-                return ResultVoUtil.validFail("Please input credential");
-            }
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = JwtUtils.buildJwt(authentication);
-            TutorUserDetail tutorUserDetail = (TutorUserDetail) authentication.getPrincipal();
-            JwtResponseDTO jwtResponseDTO = new JwtResponseDTO(jwt,tutorUserDetail.getId(), tutorUserDetail.getEmail(), tutorUserDetail.getAuthorities());
-
-            return ResultVoUtil.success("login successfully", jwtResponseDTO);
-        }catch (Exception e){
-            return ResultVoUtil.error(e);
-        }
-    }
+//    @PostMapping(value = "/login")
+//    public ResultVO login(@RequestBody UserLoginDTO userLoginDTO){
+//        try{
+//            if (userLoginDTO.getEmail() == null || userLoginDTO.getPassword() == null){
+//                return ResultVoUtil.validFail("Please input credential");
+//            }
+//            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+//            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//            String jwt = JwtUtils.buildJwt(authentication);
+//            TutorUserDetail tutorUserDetail = (TutorUserDetail) authentication.getPrincipal();
+//            JwtResponseDTO jwtResponseDTO = new JwtResponseDTO(jwt,tutorUserDetail.getId(), tutorUserDetail.getEmail(), tutorUserDetail.getAuthorities());
+//
+//            return ResultVoUtil.success("login successfully", jwtResponseDTO);
+//        }catch (Exception e){
+//            return ResultVoUtil.error(e);
+//        }
+//    }
 
     @GetMapping("/testing")
     public ResultVO testing(){
