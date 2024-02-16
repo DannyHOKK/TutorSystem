@@ -3,6 +3,7 @@ package com.TutorCentres.TutorSystem.Tutor.controller;
 import com.TutorCentres.TutorSystem.Tutor.service.TutorUserService;
 import com.TutorCentres.TutorSystem.core.dto.TutorSearchDTO;
 import com.TutorCentres.TutorSystem.core.entity.TutorListMappingEntity;
+import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
 import com.TutorCentres.TutorSystem.core.vo.TutorUserVO;
@@ -24,6 +25,16 @@ public class TutorController {
         try{
             List<TutorListMappingEntity> tutorUserVO = tutorUserService.queryTutorList(tutorSearchDTO);
             return ResultVoUtil.success(tutorUserVO);
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
+
+    @GetMapping("/getTutor")
+    public ResultVO getTutor (@RequestParam("tutorId") Integer tutorId){
+        try{
+            TutorUser tutorUser = tutorUserService.getTutorById(tutorId);
+            return ResultVoUtil.success(tutorUser);
         }catch (Exception e){
             return ResultVoUtil.error(e);
         }

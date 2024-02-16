@@ -11,6 +11,7 @@ import java.util.List;
                         fields = {
                                 @FieldResult(name = "id", column = "ID"),
                                 @FieldResult(name = "engName", column = "ENG_NAME"),
+                                @FieldResult(name = "gender", column = "GENDER"),
                                 @FieldResult(name = "tutorContent", column = "TUTOR_CONTENT"),
                                 @FieldResult(name = "tutorLevel", column = "TUTOR_LEVEL"),
                                 @FieldResult(name = "tutorAreas", column = "TUTOR_AREAS"),
@@ -18,6 +19,9 @@ import java.util.List;
                                 @FieldResult(name = "university", column = "UNIVERSITY"),
                                 @FieldResult(name = "highestEducation", column = "HIGHEST_EDUCATION"),
                                 @FieldResult(name = "highestTutorLevel", column = "HIGHEST_TUTOR_LEVEL"),
+                                @FieldResult(name = "universityMajor", column = "UNIVERSITY_MAJOR"),
+                                @FieldResult(name = "introTitle", column = "INTRO_TITLE"),
+                                @FieldResult(name = "intro", column = "INTRO"),
                         })
         })
 public class TutorListMappingEntity implements Serializable {
@@ -26,6 +30,8 @@ public class TutorListMappingEntity implements Serializable {
     private Integer id;
     @Column(name = "ENG_NAME")
     private String engName;
+    @Column(name = "GENDER")
+    private String gender;
     @Column(name = "TUTOR_CONTENT")
     private String tutorContent;
     @Column(name = "TUTOR_LEVEL")
@@ -40,9 +46,47 @@ public class TutorListMappingEntity implements Serializable {
     private String highestEducation;
     @Column(name = "HIGHEST_TUTOR_LEVEL")
     private String highestTutorLevel;
+    @Column(name = "UNIVERSITY_MAJOR")
+    private String universityMajor;
+    @Column(name = "INTRO_TITLE")
+    private String introTitle;
+    @Column(name = "INTRO")
+    private String intro;
 
 
     public TutorListMappingEntity() {
+    }
+
+    public String getIntroTitle() {
+        return introTitle;
+    }
+
+    public void setIntroTitle(String introTitle) {
+        this.introTitle = introTitle;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+    public String getUniversityMajor() {
+        return universityMajor;
+    }
+
+    public void setUniversityMajor(String universityMajor) {
+        this.universityMajor = universityMajor;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getTutorLevel() {

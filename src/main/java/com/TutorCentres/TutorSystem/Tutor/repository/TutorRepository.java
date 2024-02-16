@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface TutorRepository extends JpaRepository<TutorUser, Integer> {
     TutorUser findAllByEmail(String email);
+
+    TutorUser findAllById(Integer tutorId);
 }

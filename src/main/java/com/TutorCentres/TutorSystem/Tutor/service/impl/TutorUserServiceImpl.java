@@ -80,7 +80,7 @@ public class TutorUserServiceImpl implements TutorUserService {
     @Override
     public List<TutorListMappingEntity> queryTutorList( TutorSearchDTO tutorSearchDTO) {
 
-        String sqlscript = "select ID, ENG_NAME, TUTOR_CONTENT, TUTOR_LEVEL, TUTOR_AREAS, LOWEST_SALARY, UNIVERSITY, HIGHEST_EDUCATION, HIGHEST_TUTOR_LEVEL" +
+        String sqlscript = "select ID, ENG_NAME, GENDER, TUTOR_CONTENT, TUTOR_LEVEL, TUTOR_AREAS, LOWEST_SALARY, UNIVERSITY, HIGHEST_EDUCATION, HIGHEST_TUTOR_LEVEL, UNIVERSITY_MAJOR, INTRO_TITLE, INTRO" +
                 " from tutor_user ";
         StringBuilder sql = new StringBuilder(sqlscript);
 
@@ -149,5 +149,16 @@ public class TutorUserServiceImpl implements TutorUserService {
         List<TutorListMappingEntity> tutorListMappingEntities = query.getResultList();
         return tutorListMappingEntities;
 
+    }
+
+    @Override
+    public TutorUser getTutorById(Integer tutorId) {
+
+        TutorUser tutorUser = tutorRepository.findAllById(tutorId);
+
+        if (ObjectUtils.isEmpty(tutorUser)){
+            return null;
+        }
+        return tutorUser;
     }
 }

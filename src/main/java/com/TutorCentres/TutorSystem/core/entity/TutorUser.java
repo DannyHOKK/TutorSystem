@@ -65,28 +65,26 @@ public class TutorUser {
     private String universityMajor;
     @Column(name = "hk_open_exam")
     private String hkOpenExam;
-
     @Column(name = "tutor_areas")
     private String tutorAreas;
-
     @Column(name = "tutor_content")
     private String tutorContent;
-
     @Column(name = "tutor_level")
     private String tutorLevel;
-
     @Column(name = "tutor_speaking_level")
     private String tutorSpeaking;
-
     @Column(name = "tutor_music_level")
     private String tutorMusic;
-
     @Column(name = "tutor_other_level")
     private String tutorOtherLevel;
     @Column(name = "lowest_salary")
     private Integer lowestSalary;
     @Column(name = "ideal_salary")
     private Integer idealSalary;
+    @Column(name = "intro_title")
+    private String introTitle;
+    @Column(name = "intro")
+    private String intro;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "open_exam_result")
@@ -98,7 +96,7 @@ public class TutorUser {
     public TutorUser() {
     }
 
-    public TutorUser( String email, String password, String roles, Date createDate, Date modifyDate, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, String tutorAreas, String tutorContent, String tutorLevel, String tutorSpeaking, String tutorMusic, String tutorOtherLevel, Integer lowestSalary, Integer idealSalary, List<ExamResult> examResult) {
+    public TutorUser(String email, String password, String roles, Date createDate, Date modifyDate, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, String tutorAreas, String tutorContent, String tutorLevel, String tutorSpeaking, String tutorMusic, String tutorOtherLevel, Integer lowestSalary, Integer idealSalary, String introTitle, String intro, List<ExamResult> examResult) {
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -131,6 +129,8 @@ public class TutorUser {
         this.tutorOtherLevel = tutorOtherLevel;
         this.lowestSalary = lowestSalary;
         this.idealSalary = idealSalary;
+        this.introTitle = introTitle;
+        this.intro = intro;
         this.examResult = examResult;
     }
 
@@ -165,6 +165,24 @@ public class TutorUser {
         this.lowestSalary = tutorRegisterDTO.getLowestSalary();
         this.idealSalary = tutorRegisterDTO.getIdealSalary();
 //        this.examResult = examResult;
+        this.introTitle = tutorRegisterDTO.getIntroTitle();
+        this.intro = tutorRegisterDTO.getIntro();
+    }
+
+    public String getIntroTitle() {
+        return introTitle;
+    }
+
+    public void setIntroTitle(String introTitle) {
+        this.introTitle = introTitle;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public Integer getId() {
