@@ -161,4 +161,9 @@ public class TutorUserServiceImpl implements TutorUserService {
         }
         return tutorUser;
     }
+
+    @Override
+    public String editTutor(TutorRegisterDTO tutorRegisterDTO) {
+        return null;
+    }
 }

@@ -18,6 +18,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -31,7 +34,6 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public JwtResponseDTO studentTutorLogin(UserLoginDTO userLoginDTO) {
 
-
         StudentUser checkStudentExist = studentRepository.findAllByEmail(userLoginDTO.getEmail());
         TutorUser checkTutorExit = tutorRepository.findAllByEmail(userLoginDTO.getEmail());
         if (!ObjectUtils.isEmpty(checkStudentExist) ){
@@ -41,6 +43,30 @@ public class LoginServiceImpl implements LoginService {
         }
 
         return null;
+    }
+
+    @Override
+    public String checkEmailExist(String email) {
+
+        StudentUser checkStudentExist = studentRepository.findAllByEmail(email);
+        TutorUser checkTutorExit = tutorRepository.findAllByEmail(email);
+
+        if (!ObjectUtils.isEmpty(checkStudentExist) ){
+            return "Email Exist";
+        } else if (!ObjectUtils.isEmpty(checkTutorExit)) {
+            return "Email Exist";
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> getAllEmail() {
+        List<String> tutorEmailList = tutorRepository.findEmail();
+        List<String> studentEmailList = studentRepository.findEmail();
+        List<String> emailList = new ArrayList<>();
+        emailList.addAll(tutorEmailList);
+        emailList.addAll(studentEmailList);
+        return emailList;
     }
 
     private JwtResponseDTO studentLogin(UserLoginDTO userLoginDTO) {

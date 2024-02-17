@@ -5,11 +5,13 @@ import com.TutorCentres.TutorSystem.core.dto.JwtResponseDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
 import com.TutorCentres.TutorSystem.core.dto.UserLoginDTO;
+import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import com.TutorCentres.TutorSystem.core.utils.JwtUtils;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,5 +45,19 @@ public class TutorAuthController {
     @GetMapping("/testing")
     public ResultVO testing(){
         return ResultVoUtil.success("testing");
+    }
+
+    @PostMapping(value = "/editTutor")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResultVO editTutor (@RequestBody TutorRegisterDTO tutorRegisterDTO){
+        try{
+            String errMsg = tutorUserService.editTutor(tutorRegisterDTO);
+            if (StringUtils.isNotEmpty(errMsg)){
+                return ResultVoUtil.error(errMsg);
+            }
+            return ResultVoUtil.success("successfully edited");
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
     }
 }

@@ -24,19 +24,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        // Implement your logic to fetch user details based on the user type or data source
         UserDetails tutorUser = tutorUserService.loadUserByUsername(username);
-        if (tutorUser == null) {
-            // If the user is not found in the tutor user service, try fetching from the student user service
-            UserDetails studentUser = studentUserService.loadUserByUsername(username);
-            if (studentUser == null) {
-                throw new UsernameNotFoundException("User not found");
-            } else {
-                return studentUser;
-            }
-        } else {
+        if (tutorUser != null) {
             return tutorUser;
         }
+
+        UserDetails studentUser = studentUserService.loadUserByUsername(username);
+        if (studentUser != null) {
+            return studentUser;
+        }
+
+        throw new UsernameNotFoundException("User not found");
     }
 }

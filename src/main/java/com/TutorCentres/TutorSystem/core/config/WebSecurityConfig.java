@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,6 +19,7 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     @Autowired
@@ -57,8 +60,8 @@ public class WebSecurityConfig {
                 .antMatchers("/api/student/signup").permitAll()
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers("/tutor/**").permitAll()
-//                .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow access to Swagger UI
-//                .antMatchers("/doc.html","/doc.html/**").permitAll()
+                .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow access to Swagger UI
+                .antMatchers("/doc.html","/doc.html/**").permitAll()
                 .antMatchers("/",
                         "/*.html",
                         "/favicon.ico",
@@ -74,6 +77,7 @@ public class WebSecurityConfig {
                 .antMatchers("/v3/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/case/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

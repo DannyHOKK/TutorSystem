@@ -13,4 +13,6 @@ public interface TutorUserService {
     List<TutorListMappingEntity> queryTutorList(TutorSearchDTO tutorSearchDTO);
 
     TutorUser getTutorById(Integer tutorId);
+
+    String editTutor(TutorRegisterDTO tutorRegisterDTO);
 }
