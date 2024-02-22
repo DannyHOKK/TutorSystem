@@ -4,8 +4,9 @@ import javax.persistence.Column;
 
 public class StudentCaseDTO {
 
-
+    private String tutorCategory;
     private String subject;
+    private String studentLevel;
     private Integer tutorFee;
     private String location;
     private String locationDetails;
@@ -14,6 +15,21 @@ public class StudentCaseDTO {
     private String timeAvailable;
     private String tutorRequire;
 
+    public String getTutorCategory() {
+        return tutorCategory;
+    }
+
+    public String getStudentLevel() {
+        return studentLevel;
+    }
+
+    public void setStudentLevel(String studentLevel) {
+        this.studentLevel = studentLevel;
+    }
+
+    public void setTutorCategory(String tutorCategory) {
+        this.tutorCategory = tutorCategory;
+    }
 
     public String getSubject() {
         return subject;

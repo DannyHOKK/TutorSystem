@@ -17,8 +17,12 @@ public class StudentCase {
     private Date createDate;
     @Column(name = "MODIFY_DATE")
     private Date modifyDate;
+    @Column(name = "TUTOR_CATEGORY")
+    private String tutorCategory;
     @Column(name = "SUBJECT")
     private String subject;
+    @Column(name = "STUDENT_LEVEL")
+    private String studentLevel;
     @Column(name = "TUTOR_FEE")
     private Integer tutorFee;
     @Column(name = "LOCATION")
@@ -41,8 +45,9 @@ public class StudentCase {
     }
 
     public StudentCase(StudentCaseDTO studentCaseDTO) {
-
+        this.tutorCategory = studentCaseDTO.getTutorCategory();
         this.subject = studentCaseDTO.getSubject();
+        this.studentLevel = studentCaseDTO.getStudentLevel();
         this.tutorFee = studentCaseDTO.getTutorFee();
         this.location = studentCaseDTO.getLocation();
         this.locationDetails = studentCaseDTO.getLocationDetails();
@@ -53,18 +58,12 @@ public class StudentCase {
         this.close = false;
     }
 
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-    public StudentCase(Date createDate, Date modifyDate, String subject, Integer tutorFee, String location, String locationDetails, String lessonPerWeek, String lessonDuration, String timeAvailable, String tutorRequire, Boolean close) {
+    public StudentCase(Date createDate, Date modifyDate, String tutorCategory, String subject, String studentLevel, Integer tutorFee, String location, String locationDetails, String lessonPerWeek, String lessonDuration, String timeAvailable, String tutorRequire, Boolean close) {
         this.createDate = createDate;
         this.modifyDate = modifyDate;
+        this.tutorCategory = tutorCategory;
         this.subject = subject;
+        this.studentLevel = studentLevel;
         this.tutorFee = tutorFee;
         this.location = location;
         this.locationDetails = locationDetails;
@@ -74,6 +73,31 @@ public class StudentCase {
         this.tutorRequire = tutorRequire;
         this.close = close;
     }
+
+    public String getStudentLevel() {
+        return studentLevel;
+    }
+
+    public void setStudentLevel(String studentLevel) {
+        this.studentLevel = studentLevel;
+    }
+
+    public String getTutorCategory() {
+        return tutorCategory;
+    }
+
+    public void setTutorCategory(String tutorCategory) {
+        this.tutorCategory = tutorCategory;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
 
     public Integer getCaseId() {
         return caseId;
