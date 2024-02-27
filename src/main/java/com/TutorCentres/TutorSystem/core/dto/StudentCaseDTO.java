@@ -5,18 +5,77 @@ import javax.persistence.Column;
 public class StudentCaseDTO {
 
     private String tutorCategory;
-    private String subject;
+    private String tutorContent;
+    private String tutorMethod;
+    private String tutorRemark;
+    private String gender;
     private String studentLevel;
-    private Integer tutorFee;
-    private String location;
-    private String locationDetails;
+    private String studentLevelType;
+    private Integer maxSalary;
+    private Integer minSalary;
+    private String address;
+    private String detailsAddress;
     private String lessonPerWeek;
     private String lessonDuration;
-    private String timeAvailable;
-    private String tutorRequire;
+    private String timeslot;
+    private String tutorRequest;
+
+    public StudentCaseDTO(String tutorCategory, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest) {
+        this.tutorCategory = tutorCategory;
+        this.tutorContent = tutorContent;
+        this.tutorMethod = tutorMethod;
+        this.tutorRemark = tutorRemark;
+        this.gender = gender;
+        this.studentLevel = studentLevel;
+        this.studentLevelType = studentLevelType;
+        this.maxSalary = maxSalary;
+        this.minSalary = minSalary;
+        this.address = address;
+        this.detailsAddress = detailsAddress;
+        this.lessonPerWeek = lessonPerWeek;
+        this.lessonDuration = lessonDuration;
+        this.timeslot = timeslot;
+        this.tutorRequest = tutorRequest;
+    }
 
     public String getTutorCategory() {
         return tutorCategory;
+    }
+
+    public void setTutorCategory(String tutorCategory) {
+        this.tutorCategory = tutorCategory;
+    }
+
+    public String getTutorContent() {
+        return tutorContent;
+    }
+
+    public void setTutorContent(String tutorContent) {
+        this.tutorContent = tutorContent;
+    }
+
+    public String getTutorMethod() {
+        return tutorMethod;
+    }
+
+    public void setTutorMethod(String tutorMethod) {
+        this.tutorMethod = tutorMethod;
+    }
+
+    public String getTutorRemark() {
+        return tutorRemark;
+    }
+
+    public void setTutorRemark(String tutorRemark) {
+        this.tutorRemark = tutorRemark;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getStudentLevel() {
@@ -27,40 +86,44 @@ public class StudentCaseDTO {
         this.studentLevel = studentLevel;
     }
 
-    public void setTutorCategory(String tutorCategory) {
-        this.tutorCategory = tutorCategory;
+    public String getStudentLevelType() {
+        return studentLevelType;
     }
 
-    public String getSubject() {
-        return subject;
+    public void setStudentLevelType(String studentLevelType) {
+        this.studentLevelType = studentLevelType;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public Integer getMaxSalary() {
+        return maxSalary;
     }
 
-    public Integer getTutorFee() {
-        return tutorFee;
+    public void setMaxSalary(Integer maxSalary) {
+        this.maxSalary = maxSalary;
     }
 
-    public void setTutorFee(Integer tutorFee) {
-        this.tutorFee = tutorFee;
+    public Integer getMinSalary() {
+        return minSalary;
     }
 
-    public String getLocation() {
-        return location;
+    public void setMinSalary(Integer minSalary) {
+        this.minSalary = minSalary;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getAddress() {
+        return address;
     }
 
-    public String getLocationDetails() {
-        return locationDetails;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setLocationDetails(String locationDetails) {
-        this.locationDetails = locationDetails;
+    public String getDetailsAddress() {
+        return detailsAddress;
+    }
+
+    public void setDetailsAddress(String detailsAddress) {
+        this.detailsAddress = detailsAddress;
     }
 
     public String getLessonPerWeek() {
@@ -79,30 +142,19 @@ public class StudentCaseDTO {
         this.lessonDuration = lessonDuration;
     }
 
-    public String getTimeAvailable() {
-        return timeAvailable;
+    public String getTimeslot() {
+        return timeslot;
     }
 
-    public void setTimeAvailable(String timeAvailable) {
-        this.timeAvailable = timeAvailable;
+    public void setTimeslot(String timeslot) {
+        this.timeslot = timeslot;
     }
 
-    public String getTutorRequire() {
-        return tutorRequire;
+    public String getTutorRequest() {
+        return tutorRequest;
     }
 
-    public void setTutorRequire(String tutorRequire) {
-        this.tutorRequire = tutorRequire;
-    }
-
-    public StudentCaseDTO(String subject, Integer tutorFee, String location, String locationDetails, String lessonPerWeek, String lessonDuration, String timeAvailable, String tutorRequire) {
-        this.subject = subject;
-        this.tutorFee = tutorFee;
-        this.location = location;
-        this.locationDetails = locationDetails;
-        this.lessonPerWeek = lessonPerWeek;
-        this.lessonDuration = lessonDuration;
-        this.timeAvailable = timeAvailable;
-        this.tutorRequire = tutorRequire;
+    public void setTutorRequest(String tutorRequest) {
+        this.tutorRequest = tutorRequest;
     }
 }

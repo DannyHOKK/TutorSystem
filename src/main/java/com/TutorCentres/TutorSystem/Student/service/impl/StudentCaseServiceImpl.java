@@ -22,6 +22,7 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             StudentCase studentCase = new StudentCase(studentCaseDTO);
             studentCase.setCreateDate(new Date());
             studentCase.setModifyDate(new Date());
+            studentCase.setClose(true);
             studentCaseRepository.save(studentCase);
             return null;
         }catch (Exception e){

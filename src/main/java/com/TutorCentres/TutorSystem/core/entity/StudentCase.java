@@ -19,24 +19,34 @@ public class StudentCase {
     private Date modifyDate;
     @Column(name = "TUTOR_CATEGORY")
     private String tutorCategory;
-    @Column(name = "SUBJECT")
-    private String subject;
+    @Column(name = "TUTOR_CONTENT")
+    private String tutorContent;
+    @Column(name = "TUTOR_METHOD")
+    private String tutorMethod;
+    @Column(name = "TUTOR_REMARK")
+    private String tutorRemark;
+    @Column(name = "GENDER")
+    private String gender;
     @Column(name = "STUDENT_LEVEL")
     private String studentLevel;
-    @Column(name = "TUTOR_FEE")
-    private Integer tutorFee;
-    @Column(name = "LOCATION")
-    private String location;
-    @Column(name = "LOCATION_DETAILS")
-    private String locationDetails;
+    @Column(name = "STUDENT_LEVEL_TYPE")
+    private String studentLevelType;
+    @Column(name = "MAX_SALARY")
+    private Integer maxSalary;
+    @Column(name = "MIN_SALARY")
+    private Integer minSalary;
+    @Column(name = "ADDRESS")
+    private String address;
+    @Column(name = "DETAILS_ADDRESS")
+    private String detailsAddress;
     @Column(name = "LESSON_PER_WEEK")
     private String lessonPerWeek;
     @Column(name = "LESSON_DURATION")
     private String lessonDuration;
-    @Column(name = "TIME_AVAILABLE")
-    private String timeAvailable;
-    @Column(name = "TUTOR_REQUIRE")
-    private String tutorRequire;
+    @Column(name = "TIMESLOT")
+    private String timeslot;
+    @Column(name = "TUTOR_REQUEST")
+    private String tutorRequest;
     @Column(name = "CLOSE")
     private Boolean close;
 
@@ -44,60 +54,44 @@ public class StudentCase {
     public StudentCase() {
     }
 
-    public StudentCase(StudentCaseDTO studentCaseDTO) {
-        this.tutorCategory = studentCaseDTO.getTutorCategory();
-        this.subject = studentCaseDTO.getSubject();
-        this.studentLevel = studentCaseDTO.getStudentLevel();
-        this.tutorFee = studentCaseDTO.getTutorFee();
-        this.location = studentCaseDTO.getLocation();
-        this.locationDetails = studentCaseDTO.getLocationDetails();
-        this.lessonPerWeek = studentCaseDTO.getLessonPerWeek();
-        this.lessonDuration = studentCaseDTO.getLessonDuration();
-        this.timeAvailable = studentCaseDTO.getTimeAvailable();
-        this.tutorRequire = studentCaseDTO.getTutorRequire();
-        this.close = false;
-    }
-
-    public StudentCase(Date createDate, Date modifyDate, String tutorCategory, String subject, String studentLevel, Integer tutorFee, String location, String locationDetails, String lessonPerWeek, String lessonDuration, String timeAvailable, String tutorRequire, Boolean close) {
+    public StudentCase(Date createDate, Date modifyDate, String tutorCategory, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest, Boolean close) {
         this.createDate = createDate;
         this.modifyDate = modifyDate;
         this.tutorCategory = tutorCategory;
-        this.subject = subject;
+        this.tutorContent = tutorContent;
+        this.tutorMethod = tutorMethod;
+        this.tutorRemark = tutorRemark;
+        this.gender = gender;
         this.studentLevel = studentLevel;
-        this.tutorFee = tutorFee;
-        this.location = location;
-        this.locationDetails = locationDetails;
+        this.studentLevelType = studentLevelType;
+        this.maxSalary = maxSalary;
+        this.minSalary = minSalary;
+        this.address = address;
+        this.detailsAddress = detailsAddress;
         this.lessonPerWeek = lessonPerWeek;
         this.lessonDuration = lessonDuration;
-        this.timeAvailable = timeAvailable;
-        this.tutorRequire = tutorRequire;
+        this.timeslot = timeslot;
+        this.tutorRequest = tutorRequest;
         this.close = close;
     }
 
-    public String getStudentLevel() {
-        return studentLevel;
+    public StudentCase(StudentCaseDTO studentCaseDTO) {
+        this.tutorCategory = studentCaseDTO.getTutorCategory();
+        this.tutorContent = studentCaseDTO.getTutorContent();
+        this.tutorMethod = studentCaseDTO.getTutorMethod();
+        this.tutorRemark = studentCaseDTO.getTutorRemark();
+        this.gender = studentCaseDTO.getGender();
+        this.studentLevel = studentCaseDTO.getStudentLevel();
+        this.studentLevelType = studentCaseDTO.getStudentLevelType();
+        this.maxSalary = studentCaseDTO.getMaxSalary();
+        this.minSalary = studentCaseDTO.getMinSalary();
+        this.address = studentCaseDTO.getAddress();
+        this.detailsAddress = studentCaseDTO.getDetailsAddress();
+        this.lessonPerWeek = studentCaseDTO.getLessonPerWeek();
+        this.lessonDuration = studentCaseDTO.getLessonDuration();
+        this.timeslot = studentCaseDTO.getTimeslot();
+        this.tutorRequest = studentCaseDTO.getTutorRequest();
     }
-
-    public void setStudentLevel(String studentLevel) {
-        this.studentLevel = studentLevel;
-    }
-
-    public String getTutorCategory() {
-        return tutorCategory;
-    }
-
-    public void setTutorCategory(String tutorCategory) {
-        this.tutorCategory = tutorCategory;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
 
     public Integer getCaseId() {
         return caseId;
@@ -115,36 +109,100 @@ public class StudentCase {
         this.createDate = createDate;
     }
 
-    public String getSubject() {
-        return subject;
+    public Date getModifyDate() {
+        return modifyDate;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
     }
 
-    public Integer getTutorFee() {
-        return tutorFee;
+    public String getTutorCategory() {
+        return tutorCategory;
     }
 
-    public void setTutorFee(Integer tutorFee) {
-        this.tutorFee = tutorFee;
+    public void setTutorCategory(String tutorCategory) {
+        this.tutorCategory = tutorCategory;
     }
 
-    public String getLocation() {
-        return location;
+    public String getTutorContent() {
+        return tutorContent;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setTutorContent(String tutorContent) {
+        this.tutorContent = tutorContent;
     }
 
-    public String getLocationDetails() {
-        return locationDetails;
+    public String getTutorMethod() {
+        return tutorMethod;
     }
 
-    public void setLocationDetails(String locationDetails) {
-        this.locationDetails = locationDetails;
+    public void setTutorMethod(String tutorMethod) {
+        this.tutorMethod = tutorMethod;
+    }
+
+    public String getTutorRemark() {
+        return tutorRemark;
+    }
+
+    public void setTutorRemark(String tutorRemark) {
+        this.tutorRemark = tutorRemark;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getStudentLevel() {
+        return studentLevel;
+    }
+
+    public void setStudentLevel(String studentLevel) {
+        this.studentLevel = studentLevel;
+    }
+
+    public String getStudentLevelType() {
+        return studentLevelType;
+    }
+
+    public void setStudentLevelType(String studentLevelType) {
+        this.studentLevelType = studentLevelType;
+    }
+
+    public Integer getMaxSalary() {
+        return maxSalary;
+    }
+
+    public void setMaxSalary(Integer maxSalary) {
+        this.maxSalary = maxSalary;
+    }
+
+    public Integer getMinSalary() {
+        return minSalary;
+    }
+
+    public void setMinSalary(Integer minSalary) {
+        this.minSalary = minSalary;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDetailsAddress() {
+        return detailsAddress;
+    }
+
+    public void setDetailsAddress(String detailsAddress) {
+        this.detailsAddress = detailsAddress;
     }
 
     public String getLessonPerWeek() {
@@ -163,20 +221,20 @@ public class StudentCase {
         this.lessonDuration = lessonDuration;
     }
 
-    public String getTimeAvailable() {
-        return timeAvailable;
+    public String getTimeslot() {
+        return timeslot;
     }
 
-    public void setTimeAvailable(String timeAvailable) {
-        this.timeAvailable = timeAvailable;
+    public void setTimeslot(String timeslot) {
+        this.timeslot = timeslot;
     }
 
-    public String getTutorRequire() {
-        return tutorRequire;
+    public String getTutorRequest() {
+        return tutorRequest;
     }
 
-    public void setTutorRequire(String tutorRequire) {
-        this.tutorRequire = tutorRequire;
+    public void setTutorRequest(String tutorRequest) {
+        this.tutorRequest = tutorRequest;
     }
 
     public Boolean getClose() {
