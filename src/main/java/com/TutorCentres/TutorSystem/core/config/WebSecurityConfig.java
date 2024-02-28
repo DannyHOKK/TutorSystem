@@ -59,6 +59,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/student/**").permitAll()
                 .antMatchers("/api/student/signup").permitAll()
                 .antMatchers("/api/user/**").permitAll()
+                .antMatchers("/api/case/**").permitAll()
                 .antMatchers("/tutor/**").permitAll()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow access to Swagger UI
                 .antMatchers("/doc.html","/doc.html/**").permitAll()
@@ -76,8 +77,7 @@ public class WebSecurityConfig {
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/v3/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .antMatchers("/api/case/**").authenticated()
+//                .antMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -13,12 +13,17 @@ public class StudentCase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CASE_ID")
     private Integer caseId;
+    @ManyToOne
+    @JoinColumn(name = "STUDENT_USER_ID", referencedColumnName = "id")
+    private StudentUser studentUser;
     @Column(name = "CREATE_DATE")
     private Date createDate;
     @Column(name = "MODIFY_DATE")
     private Date modifyDate;
     @Column(name = "TUTOR_CATEGORY")
     private String tutorCategory;
+    @Column(name = "TUTOR_GENDER")
+    private String tutorGender;
     @Column(name = "TUTOR_CONTENT")
     private String tutorContent;
     @Column(name = "TUTOR_METHOD")
@@ -54,10 +59,12 @@ public class StudentCase {
     public StudentCase() {
     }
 
-    public StudentCase(Date createDate, Date modifyDate, String tutorCategory, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest, Boolean close) {
+    public StudentCase(StudentUser studentUser, Date createDate, Date modifyDate, String tutorCategory, String tutorGender, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest, Boolean close) {
+        this.studentUser = studentUser;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
         this.tutorCategory = tutorCategory;
+        this.tutorGender = tutorGender;
         this.tutorContent = tutorContent;
         this.tutorMethod = tutorMethod;
         this.tutorRemark = tutorRemark;
@@ -91,6 +98,22 @@ public class StudentCase {
         this.lessonDuration = studentCaseDTO.getLessonDuration();
         this.timeslot = studentCaseDTO.getTimeslot();
         this.tutorRequest = studentCaseDTO.getTutorRequest();
+    }
+
+    public String getTutorGender() {
+        return tutorGender;
+    }
+
+    public void setTutorGender(String tutorGender) {
+        this.tutorGender = tutorGender;
+    }
+
+    public StudentUser getStudentUser() {
+        return studentUser;
+    }
+
+    public void setStudentUser(StudentUser studentUser) {
+        this.studentUser = studentUser;
     }
 
     public Integer getCaseId() {

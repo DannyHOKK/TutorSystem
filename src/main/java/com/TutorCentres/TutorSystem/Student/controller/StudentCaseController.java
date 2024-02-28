@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/case")
@@ -30,6 +33,19 @@ public class StudentCaseController {
                 return ResultVoUtil.error(errMsg);
             }
             return ResultVoUtil.success("successfully create Case");
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
+
+    @GetMapping("/getStudentCaseList")
+    public ResultVO getStudentCaseList (){
+        try{
+            List<StudentCase> studentCaseList = studentCaseService.getStudentCaseList();
+            if (CollectionUtils.isEmpty(studentCaseList)){
+                return ResultVoUtil.error("get student case error");
+            }
+            return ResultVoUtil.success("successfully get student case", studentCaseList);
         }catch (Exception e){
             return ResultVoUtil.error(e);
         }

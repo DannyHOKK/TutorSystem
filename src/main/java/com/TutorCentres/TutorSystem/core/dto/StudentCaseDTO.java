@@ -4,6 +4,7 @@ import javax.persistence.Column;
 
 public class StudentCaseDTO {
 
+    private String tutorGender;
     private String tutorCategory;
     private String tutorContent;
     private String tutorMethod;
@@ -20,7 +21,8 @@ public class StudentCaseDTO {
     private String timeslot;
     private String tutorRequest;
 
-    public StudentCaseDTO(String tutorCategory, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest) {
+    public StudentCaseDTO(String tutorGender, String tutorCategory, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest) {
+        this.tutorGender = tutorGender;
         this.tutorCategory = tutorCategory;
         this.tutorContent = tutorContent;
         this.tutorMethod = tutorMethod;
@@ -36,6 +38,14 @@ public class StudentCaseDTO {
         this.lessonDuration = lessonDuration;
         this.timeslot = timeslot;
         this.tutorRequest = tutorRequest;
+    }
+
+    public String getTutorGender() {
+        return tutorGender;
+    }
+
+    public void setTutorGender(String tutorGender) {
+        this.tutorGender = tutorGender;
     }
 
     public String getTutorCategory() {
