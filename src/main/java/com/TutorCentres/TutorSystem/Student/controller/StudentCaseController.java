@@ -2,7 +2,9 @@ package com.TutorCentres.TutorSystem.Student.controller;
 
 import com.TutorCentres.TutorSystem.Student.service.StudentCaseService;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseDTO;
+import com.TutorCentres.TutorSystem.core.dto.StudentCaseSearchDTO;
 import com.TutorCentres.TutorSystem.core.entity.StudentCase;
+import com.TutorCentres.TutorSystem.core.entity.StudentCaseMappingEntity;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
 import org.apache.commons.lang3.StringUtils;
@@ -38,10 +40,10 @@ public class StudentCaseController {
         }
     }
 
-    @GetMapping("/getStudentCaseList")
-    public ResultVO getStudentCaseList (){
+    @PostMapping("/getStudentCaseList")
+    public ResultVO getStudentCaseList (@RequestBody StudentCaseSearchDTO studentCaseSearchDTO){
         try{
-            List<StudentCase> studentCaseList = studentCaseService.getStudentCaseList();
+            List<StudentCaseMappingEntity> studentCaseList = studentCaseService.getStudentCaseList(studentCaseSearchDTO);
             if (CollectionUtils.isEmpty(studentCaseList)){
                 return ResultVoUtil.error("get student case error");
             }
