@@ -12,6 +12,7 @@ public class StudentCaseSearchDTO {
     private Integer lowestSalary;
     private Integer maxSalary;
 
+
     public String getTutorCategory() {
         return tutorCategory;
     }

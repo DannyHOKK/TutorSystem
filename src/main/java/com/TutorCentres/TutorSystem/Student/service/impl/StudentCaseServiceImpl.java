@@ -89,7 +89,7 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             }
         }
         if(StringUtils.isNotEmpty(tutorGender)){
-            sql.append(" and TUTOR_GENDER LIKE :gender");
+            sql.append(" and TUTOR_GENDER LIKE :tutorGender");
         }
         if(StringUtils.isNotEmpty(studentLevelType)){
             sql.append(" and STUDENT_LEVEL_TYPE LIKE :studentLevelType");

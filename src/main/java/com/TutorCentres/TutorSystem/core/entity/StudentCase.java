@@ -87,6 +87,7 @@ public class StudentCase {
         this.tutorContent = studentCaseDTO.getTutorContent();
         this.tutorMethod = studentCaseDTO.getTutorMethod();
         this.tutorRemark = studentCaseDTO.getTutorRemark();
+        this.tutorGender = studentCaseDTO.getTutorGender();
         this.gender = studentCaseDTO.getGender();
         this.studentLevel = studentCaseDTO.getStudentLevel();
         this.studentLevelType = studentCaseDTO.getStudentLevelType();

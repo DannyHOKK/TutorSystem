@@ -44,9 +44,9 @@ public class StudentCaseController {
     public ResultVO getStudentCaseList (@RequestBody StudentCaseSearchDTO studentCaseSearchDTO){
         try{
             List<StudentCaseMappingEntity> studentCaseList = studentCaseService.getStudentCaseList(studentCaseSearchDTO);
-            if (CollectionUtils.isEmpty(studentCaseList)){
-                return ResultVoUtil.error("get student case error");
-            }
+//            if (CollectionUtils.isEmpty(studentCaseList)){
+//                return ResultVoUtil.error("get student case error");
+//            }
             return ResultVoUtil.success("successfully get student case", studentCaseList);
         }catch (Exception e){
             return ResultVoUtil.error(e);
