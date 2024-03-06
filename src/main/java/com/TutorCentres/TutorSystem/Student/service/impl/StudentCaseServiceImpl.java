@@ -66,7 +66,7 @@ public class StudentCaseServiceImpl implements StudentCaseService {
         String tutorGender = null;
         String studentLevelType = null;
         List<String> studentLevel = null;
-        Integer lowestSalary = null;
+        Integer minSalary = null;
         Integer maxSalary = null;
 
 
@@ -76,7 +76,7 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             tutorGender = studentCaseSearchDTO.getTutorGender();
             studentLevelType = studentCaseSearchDTO.getStudentLevelType();
             studentLevel = studentCaseSearchDTO.getStudentLevel();
-            lowestSalary = studentCaseSearchDTO.getLowestSalary();
+            minSalary = studentCaseSearchDTO.getLowestSalary();
             maxSalary = studentCaseSearchDTO.getMaxSalary();
         }
 
@@ -99,8 +99,8 @@ public class StudentCaseServiceImpl implements StudentCaseService {
                 sql.append(" and STUDENT_LEVEL LIKE :studentLevel").append(i);
             }
         }
-        if (lowestSalary != null && lowestSalary > 0) {
-            sql.append(" and LOWEST_SALARY >= :lowestSalary");
+        if (minSalary != null && minSalary > 0) {
+            sql.append(" and MIN_SALARY >= :minSalary");
         }
         if (maxSalary != null && maxSalary > 0) {
             sql.append(" and MAX_SALARY <= :maxSalary");
@@ -128,8 +128,8 @@ public class StudentCaseServiceImpl implements StudentCaseService {
                 query.setParameter("studentLevel" + i , "%" + studentLevel.get(i) + "%");
             }
         }
-        if(lowestSalary != null && lowestSalary > 0){
-            query.setParameter("lowestSalary", lowestSalary);
+        if(minSalary != null && minSalary > 0){
+            query.setParameter("minSalary", minSalary);
         }
         if(maxSalary != null && maxSalary > 0){
             query.setParameter("maxSalary", maxSalary);
