@@ -5,4 +5,6 @@ import com.TutorCentres.TutorSystem.core.dto.StudentRegisterDTO;
 
 public interface StudentUserService {
     String signUp(StudentRegisterDTO studentRegisterDTO);
+
+    String matchingTutor(Integer tutorId);
 }
