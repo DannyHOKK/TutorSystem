@@ -4,25 +4,28 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class StudentMapTutor {
+public class TutorMatchStudentCase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "STUDENT_USER_ID", referencedColumnName = "id")
-    private StudentUser studentUser;
+    @JoinColumn(name = "STUDENT_CASE_ID", referencedColumnName = "CASE_ID")
+    private StudentCase studentCase;
     @ManyToOne
-    @JoinColumn(name = "TUTOR_USER_ID", referencedColumnName = "id")
+    @JoinColumn(name = "TUTOR_ID", referencedColumnName = "id")
     private TutorUser tutorUser;
+    @Column(name = "CREATE_DATE")
     private Date createDate;
+    @Column(name = "MODIFY_DATE")
     private Date modifyDate;
+    @Column(name = "STATUS")
     private String status;
 
-    public StudentMapTutor() {
+    public TutorMatchStudentCase() {
     }
 
-    public StudentMapTutor(StudentUser studentUser, TutorUser tutorUser, Date createDate, Date modifyDate, String status) {
-        this.studentUser = studentUser;
+    public TutorMatchStudentCase(StudentCase studentCase, TutorUser tutorUser, Date createDate, Date modifyDate, String status) {
+        this.studentCase = studentCase;
         this.tutorUser = tutorUser;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
@@ -37,12 +40,12 @@ public class StudentMapTutor {
         this.id = id;
     }
 
-    public StudentUser getStudentUser() {
-        return studentUser;
+    public StudentCase getStudentCase() {
+        return studentCase;
     }
 
-    public void setStudentUser(StudentUser studentUser) {
-        this.studentUser = studentUser;
+    public void setStudentCase(StudentCase studentCase) {
+        this.studentCase = studentCase;
     }
 
     public TutorUser getTutorUser() {

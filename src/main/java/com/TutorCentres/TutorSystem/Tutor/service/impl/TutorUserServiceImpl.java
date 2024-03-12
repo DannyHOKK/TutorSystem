@@ -1,15 +1,19 @@
 package com.TutorCentres.TutorSystem.Tutor.service.impl;
 
+import com.TutorCentres.TutorSystem.Student.repository.StudentCaseRepository;
+import com.TutorCentres.TutorSystem.Student.repository.StudentMatchTutorRepository;
 import com.TutorCentres.TutorSystem.Student.repository.StudentRepository;
+import com.TutorCentres.TutorSystem.Tutor.repository.TutorMatchStudentCaseRepository;
 import com.TutorCentres.TutorSystem.Tutor.repository.TutorRepository;
 import com.TutorCentres.TutorSystem.Tutor.service.TutorUserService;
 import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorSearchDTO;
-import com.TutorCentres.TutorSystem.core.entity.StudentUser;
-import com.TutorCentres.TutorSystem.core.entity.TutorListMappingEntity;
-import com.TutorCentres.TutorSystem.core.entity.TutorUser;
+import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
+import com.TutorCentres.TutorSystem.core.entity.*;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +31,12 @@ public class TutorUserServiceImpl implements TutorUserService {
     private TutorRepository tutorRepository;
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private StudentCaseRepository studentCaseRepository;
+    @Autowired
+    private TutorMatchStudentCaseRepository tutorMatchStudentCaseRepository;
+    @Autowired
+    private StudentMatchTutorRepository studentMatchTutorRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @PersistenceContext
@@ -165,5 +175,69 @@ public class TutorUserServiceImpl implements TutorUserService {
     @Override
     public String editTutor(TutorRegisterDTO tutorRegisterDTO) {
         return null;
+    }
+
+    @Override
+    public String matchingStudentCase(Integer caseId) {
+        try{
+            StudentCase studentCase = studentCaseRepository.findById(caseId).orElseThrow(null);
+            TutorUserDetail tutorUserDetail = (TutorUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            TutorUser tutorUser = tutorRepository.findById(tutorUserDetail.getId()).orElseThrow(null);
+            TutorMatchStudentCase checkTutorMatchStudentCase = tutorMatchStudentCaseRepository.findByCaseId(caseId,tutorUser.getId());
+
+            if(ObjectUtils.isNotEmpty(checkTutorMatchStudentCase) ){
+                if(StringUtils.contains(checkTutorMatchStudentCase.getStatus(), "cancel") ){
+//                    return "Matching Student Case already exist";
+                    tutorMatchStudentCaseRepository.deleteById(checkTutorMatchStudentCase.getId());
+                }else if(StringUtils.contains(checkTutorMatchStudentCase.getStatus(), "rejected") ){
+                    return "學生個案已拒絕過你";
+                }else if(StringUtils.contains(checkTutorMatchStudentCase.getStatus(), "success") ){
+                    return "學生個案已配對成功";
+                }else{
+                    return "學生個案正在處理";
+                }
+            }
+
+            TutorMatchStudentCase tutorMatchStudentCase = new TutorMatchStudentCase();
+            tutorMatchStudentCase.setStudentCase(studentCase);
+            tutorMatchStudentCase.setTutorUser(tutorUser);
+            tutorMatchStudentCase.setCreateDate(new Date());
+            tutorMatchStudentCase.setModifyDate(new Date());
+            tutorMatchStudentCase.setStatus("pending");
+            tutorMatchStudentCaseRepository.save(tutorMatchStudentCase);
+            return null;
+        }catch (Exception e){
+            return "matchingStudentCase mapping failed";
+        }
+    }
+
+    @Override
+    public List<TutorMatchStudentCase> getMatchingCase(Integer tutorId) {
+
+        List<TutorMatchStudentCase> tutorMatchStudentCases = tutorMatchStudentCaseRepository.findAllByTutorId(tutorId);
+        return tutorMatchStudentCases;
+    }
+
+    @Override
+    public List<StudentMatchTutor> getStudentMatching() {
+        TutorUserDetail tutorUserDetail = (TutorUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<StudentMatchTutor> studentMatchTutor = studentMatchTutorRepository.findAllByTutorId(tutorUserDetail.getId());
+        return studentMatchTutor;
+    }
+
+    @Override
+    public String cancelMatchingCase(Integer caseId) {
+        try{
+            TutorUserDetail tutorUserDetail = (TutorUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            TutorMatchStudentCase tutorMatchStudentCase = tutorMatchStudentCaseRepository.findByCaseId(caseId, tutorUserDetail.getId());
+//            TutorMatchStudentCase newTutorMatchStudentCase = new TutorMatchStudentCase(tutorMatchStudentCase.getStudentCase(),tutorMatchStudentCase.getTutorUser(),tutorMatchStudentCase.getCreateDate(),tutorMatchStudentCase.getModifyDate(),"cancel");
+
+            tutorMatchStudentCase.setStatus("cancel");
+            tutorMatchStudentCase.setModifyDate(new Date());
+            tutorMatchStudentCaseRepository.save(tutorMatchStudentCase);
+            return null;
+        }catch (Exception e){
+            return "cancel Matching Case failed";
+        }
     }
 }

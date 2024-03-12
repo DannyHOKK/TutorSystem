@@ -1,13 +1,16 @@
 package com.TutorCentres.TutorSystem.Student.service.impl;
 
-import com.TutorCentres.TutorSystem.Student.repository.StudentMapTutorRepository;
+import com.TutorCentres.TutorSystem.Student.repository.StudentMatchTutorRepository;
 import com.TutorCentres.TutorSystem.Student.repository.StudentRepository;
 import com.TutorCentres.TutorSystem.Student.service.StudentUserService;
 import com.TutorCentres.TutorSystem.Tutor.repository.TutorRepository;
+import com.TutorCentres.TutorSystem.core.dto.StudentMatchTutorDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentRegisterDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentUserDetail;
-import com.TutorCentres.TutorSystem.core.entity.StudentMapTutor;
+import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
+import com.TutorCentres.TutorSystem.core.entity.StudentMatchTutor;
 import com.TutorCentres.TutorSystem.core.entity.StudentUser;
+import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class StudentUserServiceImpl implements StudentUserService {
@@ -27,7 +31,7 @@ public class StudentUserServiceImpl implements StudentUserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
-    private StudentMapTutorRepository studentMapTutorRepository;
+    private StudentMatchTutorRepository studentMatchTutorRepository;
     @Override
     public String signUp(StudentRegisterDTO studentRegisterDTO) {
 
@@ -50,16 +54,38 @@ public class StudentUserServiceImpl implements StudentUserService {
     }
 
     @Override
-    public String matchingTutor(Integer tutorId) {
+    public String matchingTutor(StudentMatchTutorDTO studentMatchTutorDTO) {
         try {
-            TutorUser tutorUser = tutorRepository.findAllById(tutorId);
+            TutorUser tutorUser = tutorRepository.findAllById(studentMatchTutorDTO.getTutorId());
             StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             StudentUser studentUser = studentRepository.findAllByEmail(studentUserDetail.getEmail());
-            StudentMapTutor studentMapTutor = new StudentMapTutor(studentUser,tutorUser,new Date(), new Date(),"pending");
-            studentMapTutorRepository.save(studentMapTutor);
+            StudentMatchTutor studentMatchTutor = new StudentMatchTutor(studentUser,tutorUser,studentMatchTutorDTO.getStudentLevelType(),studentMatchTutorDTO.getStudentLevel(),studentMatchTutorDTO.getSalary(),studentMatchTutorDTO.getTutorContent(),studentMatchTutorDTO.getTutorMethod(),studentMatchTutorDTO.getAddress(),new Date(), new Date(),"pending");
+            studentMatchTutorRepository.save(studentMatchTutor);
             return null;
         }catch (Exception e){
             return "Cant Save";
+        }
+    }
+
+    @Override
+    public List<StudentMatchTutor> getStudentMatching() {
+        StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<StudentMatchTutor> studentMatchTutor = studentMatchTutorRepository.findAllByStudentId(studentUserDetail.getId());
+        return studentMatchTutor;
+    }
+
+    @Override
+    public String cancelMatchingTutor(Integer caseId) {
+        try{
+            StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            StudentMatchTutor studentMatchTutor = studentMatchTutorRepository.findById(caseId).orElseThrow(null);
+
+            studentMatchTutor.setStatus("cancel");
+            studentMatchTutor.setModifyDate(new Date());
+            studentMatchTutorRepository.save(studentMatchTutor);
+            return null;
+        }catch (Exception e){
+            return "cancel Student Matching Tutor Case failed";
         }
     }
 }
