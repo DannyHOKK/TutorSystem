@@ -5,10 +5,12 @@ import com.TutorCentres.TutorSystem.core.dto.StudentCaseDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseSearchDTO;
 import com.TutorCentres.TutorSystem.core.entity.StudentCase;
 import com.TutorCentres.TutorSystem.core.entity.StudentCaseMappingEntity;
+import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,4 +54,18 @@ public class StudentCaseController {
             return ResultVoUtil.error(e);
         }
     }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/getStudentCaseById")
+    public ResultVO getStudentCaseById (){
+        try{
+//            List<TutorMatchStudentCase> tutorMatchStudentCases = studentCaseService.getStudentCaseById();
+            List<StudentCase> studentCaseList = studentCaseService.getStudentCaseById();
+
+            return ResultVoUtil.success("成功拎到學生個案", studentCaseList);
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
+
 }

@@ -52,14 +52,14 @@ public class StudentCase {
     private String timeslot;
     @Column(name = "TUTOR_REQUEST")
     private String tutorRequest;
-    @Column(name = "CLOSE")
-    private Boolean close;
+    @Column(name = "STATUS")
+    private String status;
 
 
     public StudentCase() {
     }
 
-    public StudentCase(StudentUser studentUser, Date createDate, Date modifyDate, String tutorCategory, String tutorGender, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest, Boolean close) {
+    public StudentCase(StudentUser studentUser, Date createDate, Date modifyDate, String tutorCategory, String tutorGender, String tutorContent, String tutorMethod, String tutorRemark, String gender, String studentLevel, String studentLevelType, Integer maxSalary, Integer minSalary, String address, String detailsAddress, String lessonPerWeek, String lessonDuration, String timeslot, String tutorRequest, String status) {
         this.studentUser = studentUser;
         this.createDate = createDate;
         this.modifyDate = modifyDate;
@@ -79,7 +79,7 @@ public class StudentCase {
         this.lessonDuration = lessonDuration;
         this.timeslot = timeslot;
         this.tutorRequest = tutorRequest;
-        this.close = close;
+        this.status = status;
     }
 
     public StudentCase(StudentCaseDTO studentCaseDTO) {
@@ -261,11 +261,11 @@ public class StudentCase {
         this.tutorRequest = tutorRequest;
     }
 
-    public Boolean getClose() {
-        return close;
+    public String getStatus() {
+        return status;
     }
 
-    public void setClose(Boolean close) {
-        this.close = close;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

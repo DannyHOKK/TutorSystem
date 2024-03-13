@@ -3,12 +3,14 @@ package com.TutorCentres.TutorSystem.Student.service.impl;
 import com.TutorCentres.TutorSystem.Student.repository.StudentCaseRepository;
 import com.TutorCentres.TutorSystem.Student.repository.StudentRepository;
 import com.TutorCentres.TutorSystem.Student.service.StudentCaseService;
+import com.TutorCentres.TutorSystem.Tutor.repository.TutorMatchStudentCaseRepository;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseSearchDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentUserDetail;
 import com.TutorCentres.TutorSystem.core.entity.StudentCase;
 import com.TutorCentres.TutorSystem.core.entity.StudentCaseMappingEntity;
 import com.TutorCentres.TutorSystem.core.entity.StudentUser;
+import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,10 @@ public class StudentCaseServiceImpl implements StudentCaseService {
 
     @Autowired
     private StudentCaseRepository studentCaseRepository;
-
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private TutorMatchStudentCaseRepository tutorMatchStudentCaseRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -44,7 +47,7 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             studentCase.setCreateDate(new Date());
             studentCase.setModifyDate(new Date());
             studentCase.setStudentUser(studentUser);
-            studentCase.setClose(true);
+            studentCase.setStatus("pending");
             studentCaseRepository.save(studentCase);
             return null;
         }catch (Exception e){
@@ -139,4 +142,14 @@ public class StudentCaseServiceImpl implements StudentCaseService {
         return studentCaseMappingEntities;
 
     }
+
+    @Override
+    public List<StudentCase> getStudentCaseById() {
+        StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<StudentCase> studentCaseList = studentCaseRepository.findAllByStudentId(studentUserDetail.getId());
+//        List<TutorMatchStudentCase> tutorMatchStudentCaseList = tutorMatchStudentCaseRepository.findAllByStudentId(studentUserDetail.getId());
+        return studentCaseList;
+    }
+
+
 }

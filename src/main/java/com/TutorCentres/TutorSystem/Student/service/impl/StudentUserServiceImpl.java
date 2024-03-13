@@ -13,6 +13,7 @@ import com.TutorCentres.TutorSystem.core.entity.StudentUser;
 import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,7 +60,28 @@ public class StudentUserServiceImpl implements StudentUserService {
             TutorUser tutorUser = tutorRepository.findAllById(studentMatchTutorDTO.getTutorId());
             StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             StudentUser studentUser = studentRepository.findAllByEmail(studentUserDetail.getEmail());
-            StudentMatchTutor studentMatchTutor = new StudentMatchTutor(studentUser,tutorUser,studentMatchTutorDTO.getStudentLevelType(),studentMatchTutorDTO.getStudentLevel(),studentMatchTutorDTO.getSalary(),studentMatchTutorDTO.getTutorContent(),studentMatchTutorDTO.getTutorMethod(),studentMatchTutorDTO.getAddress(),new Date(), new Date(),"pending");
+            StudentMatchTutor checkStudentMatchTutor = studentMatchTutorRepository
+                    .findByTutorIdAndStudentId(studentUserDetail.getId(), studentMatchTutorDTO.getTutorId());
+
+            if (ObjectUtils.isNotEmpty(checkStudentMatchTutor)){
+                if(StringUtils.contains(checkStudentMatchTutor.getStatus(), "cancel") ){
+//                    return "Matching Student Case already exist";
+                    studentMatchTutorRepository.deleteById(checkStudentMatchTutor.getId());
+                }else if(StringUtils.contains(checkStudentMatchTutor.getStatus(), "rejected") ){
+                    return "導師已拒絕過你";
+                }else if(StringUtils.contains(checkStudentMatchTutor.getStatus(), "success") ){
+                    return "你的個案已配對成功";
+                }else{
+                    return "你的個案正在處理";
+                }
+            }
+
+            StudentMatchTutor studentMatchTutor = new StudentMatchTutor(studentUser,tutorUser
+                    ,studentMatchTutorDTO.getStudentLevelType(),studentMatchTutorDTO.getStudentLevel()
+                    ,studentMatchTutorDTO.getSalary(),studentMatchTutorDTO.getTutorContent()
+                    ,studentMatchTutorDTO.getTutorMethod(),studentMatchTutorDTO.getAddress()
+                    ,new Date(), new Date(),"pending");
+
             studentMatchTutorRepository.save(studentMatchTutor);
             return null;
         }catch (Exception e){

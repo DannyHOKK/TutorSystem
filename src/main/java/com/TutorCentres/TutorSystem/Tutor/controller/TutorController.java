@@ -62,7 +62,7 @@ public class TutorController {
             if (StringUtils.isNotEmpty(errMsg)){
                 return ResultVoUtil.error(errMsg);
             }
-            return ResultVoUtil.success();
+            return ResultVoUtil.success("成功申請配對");
         }catch (Exception e){
             return ResultVoUtil.error(e);
         }
