@@ -2,9 +2,8 @@ package com.TutorCentres.TutorSystem.Student.service;
 
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseSearchDTO;
-import com.TutorCentres.TutorSystem.core.entity.StudentCase;
 import com.TutorCentres.TutorSystem.core.entity.StudentCaseMappingEntity;
-import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
+import com.TutorCentres.TutorSystem.core.vo.StudentCaseMatchingVO;
 
 import java.util.List;
 
@@ -14,6 +13,6 @@ public interface StudentCaseService {
     List<StudentCaseMappingEntity> getStudentCaseList(StudentCaseSearchDTO studentCaseSearchDTO);
 
 
-    List<StudentCase> getStudentCaseById();
+    List<StudentCaseMatchingVO> getStudentCaseById();
 
 }

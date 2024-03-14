@@ -11,6 +11,7 @@ import com.TutorCentres.TutorSystem.core.entity.StudentCase;
 import com.TutorCentres.TutorSystem.core.entity.StudentCaseMappingEntity;
 import com.TutorCentres.TutorSystem.core.entity.StudentUser;
 import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
+import com.TutorCentres.TutorSystem.core.vo.StudentCaseMatchingVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,11 +145,13 @@ public class StudentCaseServiceImpl implements StudentCaseService {
     }
 
     @Override
-    public List<StudentCase> getStudentCaseById() {
+    public List<StudentCaseMatchingVO> getStudentCaseById() {
         StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<StudentCase> studentCaseList = studentCaseRepository.findAllByStudentId(studentUserDetail.getId());
-//        List<TutorMatchStudentCase> tutorMatchStudentCaseList = tutorMatchStudentCaseRepository.findAllByStudentId(studentUserDetail.getId());
-        return studentCaseList;
+//        List<StudentCase> studentCaseList = studentCaseRepository.findAllByStudentId(studentUserDetail.getId());
+        List<TutorMatchStudentCase> tutorMatchStudentCaseList = tutorMatchStudentCaseRepository.findAllByStudentId(studentUserDetail.getId());
+
+        List<StudentCaseMatchingVO> studentCaseMatchingVOS = studentCaseRepository.findAllJoinTableByStudentId(studentUserDetail.getId());
+        return studentCaseMatchingVOS;
     }
 
 

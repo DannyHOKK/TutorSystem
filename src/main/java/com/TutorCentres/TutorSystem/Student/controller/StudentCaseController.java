@@ -3,18 +3,13 @@ package com.TutorCentres.TutorSystem.Student.controller;
 import com.TutorCentres.TutorSystem.Student.service.StudentCaseService;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseSearchDTO;
-import com.TutorCentres.TutorSystem.core.entity.StudentCase;
 import com.TutorCentres.TutorSystem.core.entity.StudentCaseMappingEntity;
-import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
+import com.TutorCentres.TutorSystem.core.vo.StudentCaseMatchingVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,9 +55,9 @@ public class StudentCaseController {
     public ResultVO getStudentCaseById (){
         try{
 //            List<TutorMatchStudentCase> tutorMatchStudentCases = studentCaseService.getStudentCaseById();
-            List<StudentCase> studentCaseList = studentCaseService.getStudentCaseById();
-
-            return ResultVoUtil.success("成功拎到學生個案", studentCaseList);
+//            List<StudentCase> studentCaseList = studentCaseService.getStudentCaseById();
+            List<StudentCaseMatchingVO> studentCaseMatchingVOS = studentCaseService.getStudentCaseById();
+            return ResultVoUtil.success("成功拎到學生個案", studentCaseMatchingVOS);
         }catch (Exception e){
             return ResultVoUtil.error(e);
         }
