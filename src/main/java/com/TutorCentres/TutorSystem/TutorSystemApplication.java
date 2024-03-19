@@ -18,9 +18,7 @@ public class TutorSystemApplication {
 	@PostConstruct
 	public void initTwilio(){
 		Twilio.init(twilioConfig.getAccountSid(),twilioConfig.getAuthToken());
-		Service service = Service.creator("補習驗證SMS").create();
 
-		System.out.println(service.getSid());
 	}
 
 	public static void main(String[] args) {
