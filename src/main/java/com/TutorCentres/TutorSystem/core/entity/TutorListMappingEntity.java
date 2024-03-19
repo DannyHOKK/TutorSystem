@@ -14,6 +14,9 @@ import java.util.List;
                                 @FieldResult(name = "gender", column = "GENDER"),
                                 @FieldResult(name = "tutorContent", column = "TUTOR_CONTENT"),
                                 @FieldResult(name = "tutorLevel", column = "TUTOR_LEVEL"),
+                                @FieldResult(name = "tutorMusicLevel", column = "TUTOR_MUSIC_LEVEL"),
+                                @FieldResult(name = "tutorSpeakingLevel", column = "TUTOR_SPEAKING_LEVEL"),
+                                @FieldResult(name = "tutorOtherLevel", column = "TUTOR_OTHER_LEVEL"),
                                 @FieldResult(name = "tutorAreas", column = "TUTOR_AREAS"),
                                 @FieldResult(name = "lowestSalary", column = "LOWEST_SALARY"),
                                 @FieldResult(name = "university", column = "UNIVERSITY"),
@@ -36,6 +39,12 @@ public class TutorListMappingEntity implements Serializable {
     private String tutorContent;
     @Column(name = "TUTOR_LEVEL")
     private String tutorLevel;
+    @Column(name = "TUTOR_MUSIC_LEVEL")
+    private String tutorMusicLevel;
+    @Column(name = "TUTOR_SPEAKING_LEVEL")
+    private String tutorSpeakingLevel;
+    @Column(name = "TUTOR_OTHER_LEVEL")
+    private String tutorOtherLevel;
     @Column(name = "TUTOR_AREAS")
     private String tutorAreas;
     @Column(name = "LOWEST_SALARY")
@@ -55,6 +64,30 @@ public class TutorListMappingEntity implements Serializable {
 
 
     public TutorListMappingEntity() {
+    }
+
+    public String getTutorMusicLevel() {
+        return tutorMusicLevel;
+    }
+
+    public void setTutorMusicLevel(String tutorMusicLevel) {
+        this.tutorMusicLevel = tutorMusicLevel;
+    }
+
+    public String getTutorSpeakingLevel() {
+        return tutorSpeakingLevel;
+    }
+
+    public void setTutorSpeakingLevel(String tutorSpeakingLevel) {
+        this.tutorSpeakingLevel = tutorSpeakingLevel;
+    }
+
+    public String getTutorOtherLevel() {
+        return tutorOtherLevel;
+    }
+
+    public void setTutorOtherLevel(String tutorOtherLevel) {
+        this.tutorOtherLevel = tutorOtherLevel;
     }
 
     public String getIntroTitle() {

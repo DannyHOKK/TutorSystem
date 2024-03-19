@@ -90,7 +90,7 @@ public class TutorUserServiceImpl implements TutorUserService {
     @Override
     public List<TutorListMappingEntity> queryTutorList( TutorSearchDTO tutorSearchDTO) {
 
-        String sqlscript = "select ID, ENG_NAME, GENDER, TUTOR_CONTENT, TUTOR_LEVEL, TUTOR_AREAS, LOWEST_SALARY, UNIVERSITY, HIGHEST_EDUCATION, HIGHEST_TUTOR_LEVEL, UNIVERSITY_MAJOR, INTRO_TITLE, INTRO" +
+        String sqlscript = "select ID, ENG_NAME, GENDER, TUTOR_CONTENT, TUTOR_LEVEL,TUTOR_MUSIC_LEVEL, TUTOR_SPEAKING_LEVEL, TUTOR_OTHER_LEVEL, TUTOR_AREAS, LOWEST_SALARY, UNIVERSITY, HIGHEST_EDUCATION, HIGHEST_TUTOR_LEVEL, UNIVERSITY_MAJOR, INTRO_TITLE, INTRO" +
                 " from tutor_user ";
         StringBuilder sql = new StringBuilder(sqlscript);
 
@@ -109,18 +109,21 @@ public class TutorUserServiceImpl implements TutorUserService {
         }
         sql.append(" WHERE 1=1 ");
         if (!CollectionUtils.isEmpty(tutorContent)) {
-            for (int i = 0; i < tutorContent.size(); i++) {
-                sql.append(" and TUTOR_CONTENT LIKE :tutorContent").append(i);
+            sql.append(" and TUTOR_CONTENT LIKE :tutorContent");
+            for (int i = 1; i < tutorContent.size(); i++) {
+                sql.append(" or TUTOR_CONTENT LIKE :tutorContent").append(i);
             }
         }
         if (!CollectionUtils.isEmpty(tutorAreas)) {
-            for (int i = 0; i < tutorAreas.size(); i++) {
-                sql.append(" and TUTOR_AREAS LIKE :tutorAreas").append(i);
+            sql.append(" and TUTOR_AREAS LIKE :tutorAreas");
+            for (int i = 1; i < tutorAreas.size(); i++) {
+                sql.append(" or TUTOR_AREAS LIKE :tutorAreas").append(i);
             }
         }
         if (!CollectionUtils.isEmpty(tutorLevel)) {
-            for (int i = 0; i < tutorLevel.size(); i++) {
-                sql.append(" and TUTOR_LEVEL LIKE :tutorLevel").append(i);
+            sql.append(" and TUTOR_LEVEL LIKE :tutorLevel");
+            for (int i = 1; i < tutorLevel.size(); i++) {
+                sql.append(" or TUTOR_LEVEL LIKE :tutorLevel").append(i);
             }
         }
         if (lowestSalary != null && lowestSalary > 0) {
@@ -133,17 +136,20 @@ public class TutorUserServiceImpl implements TutorUserService {
         Query query = entityManager.createNativeQuery(sql.toString(), "TutorListMappingEntity");
 
         if (!CollectionUtils.isEmpty(tutorContent)) {
-            for (int i = 0; i < tutorContent.size(); i++) {
+            query.setParameter("tutorContent" , "%" + tutorContent.get(0) + "%");
+            for (int i = 1; i < tutorContent.size(); i++) {
                 query.setParameter("tutorContent" + i , "%" + tutorContent.get(i) + "%");
             }
         }
         if (!CollectionUtils.isEmpty(tutorAreas)) {
-            for (int i = 0; i < tutorAreas.size(); i++) {
+            query.setParameter("tutorAreas"  , "%" + tutorAreas.get(0) + "%");
+            for (int i = 1; i < tutorAreas.size(); i++) {
                 query.setParameter("tutorAreas" + i , "%" + tutorAreas.get(i) + "%");
             }
         }
         if (!CollectionUtils.isEmpty(tutorLevel)) {
-            for (int i = 0; i < tutorLevel.size(); i++) {
+            query.setParameter("tutorLevel", "%" + tutorLevel.get(0) + "%");
+            for (int i = 1; i < tutorLevel.size(); i++) {
                 query.setParameter("tutorLevel" + i, "%" + tutorLevel.get(i) + "%");
             }
         }
@@ -185,6 +191,7 @@ public class TutorUserServiceImpl implements TutorUserService {
             TutorUser tutorUser = tutorRepository.findById(tutorUserDetail.getId()).orElseThrow(null);
             TutorMatchStudentCase checkTutorMatchStudentCase = tutorMatchStudentCaseRepository.findByCaseId(caseId,tutorUser.getId());
 
+
             if(ObjectUtils.isNotEmpty(checkTutorMatchStudentCase) ){
                 if(StringUtils.contains(checkTutorMatchStudentCase.getStatus(), "cancel") ){
 //                    return "Matching Student Case already exist";
@@ -205,6 +212,8 @@ public class TutorUserServiceImpl implements TutorUserService {
             tutorMatchStudentCase.setModifyDate(new Date());
             tutorMatchStudentCase.setStatus("pending");
             tutorMatchStudentCaseRepository.save(tutorMatchStudentCase);
+            studentCase.setStatus("newTutor");
+            studentCaseRepository.save(studentCase);
             return null;
         }catch (Exception e){
             return "matchingStudentCase mapping failed";
@@ -230,14 +239,41 @@ public class TutorUserServiceImpl implements TutorUserService {
         try{
             TutorUserDetail tutorUserDetail = (TutorUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             TutorMatchStudentCase tutorMatchStudentCase = tutorMatchStudentCaseRepository.findByCaseId(caseId, tutorUserDetail.getId());
-//            TutorMatchStudentCase newTutorMatchStudentCase = new TutorMatchStudentCase(tutorMatchStudentCase.getStudentCase(),tutorMatchStudentCase.getTutorUser(),tutorMatchStudentCase.getCreateDate(),tutorMatchStudentCase.getModifyDate(),"cancel");
-
+            StudentCase studentCase = studentCaseRepository.findById(caseId).orElseThrow(null);
             tutorMatchStudentCase.setStatus("cancel");
             tutorMatchStudentCase.setModifyDate(new Date());
             tutorMatchStudentCaseRepository.save(tutorMatchStudentCase);
+            studentCase.setStatus("new");
+            studentCaseRepository.save(studentCase);
             return null;
         }catch (Exception e){
             return "cancel Matching Case failed";
+        }
+    }
+
+    @Override
+    public String rejectStudentMatching(Integer studentMatchId) {
+        try{
+            StudentMatchTutor studentMatchTutor = studentMatchTutorRepository.findById(studentMatchId).orElseThrow(null);
+            studentMatchTutor.setStatus("rejected");
+            studentMatchTutor.setModifyDate(new Date());
+            studentMatchTutorRepository.save(studentMatchTutor);
+            return null;
+        }catch (Exception e){
+            return "無法拒絕學生配對";
+        }
+    }
+
+    @Override
+    public String acceptStudentMatching(Integer studentMatchId) {
+        try{
+            StudentMatchTutor studentMatchTutor = studentMatchTutorRepository.findById(studentMatchId).orElseThrow(null);
+            studentMatchTutor.setStatus("waitAdmin");
+            studentMatchTutor.setModifyDate(new Date());
+            studentMatchTutorRepository.save(studentMatchTutor);
+            return null;
+        }catch (Exception e){
+            return "無法接受學生配對";
         }
     }
 }

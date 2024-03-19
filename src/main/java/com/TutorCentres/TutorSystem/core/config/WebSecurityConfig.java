@@ -61,6 +61,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers("/api/case/**").permitAll()
                 .antMatchers("/tutor/**").permitAll()
+                .antMatchers("/twilio/**").permitAll()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow access to Swagger UI
                 .antMatchers("/doc.html","/doc.html/**").permitAll()
                 .antMatchers("/",

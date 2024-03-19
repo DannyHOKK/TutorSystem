@@ -15,4 +15,7 @@ public interface StudentCaseService {
 
     List<StudentCaseMatchingVO> getStudentCaseById();
 
+    String rejectStudentCase(Integer tutorMatchCaseId);
+
+    String acceptStudentCase(Integer tutorMatchCaseId);
 }

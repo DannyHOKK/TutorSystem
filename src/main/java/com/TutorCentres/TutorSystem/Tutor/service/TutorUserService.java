@@ -25,4 +25,8 @@ public interface TutorUserService {
     List<StudentMatchTutor> getStudentMatching();
 
     String cancelMatchingCase(Integer caseId);
+
+    String rejectStudentMatching(Integer studentMatchId);
+
+    String acceptStudentMatching(Integer studentMatchId);
 }

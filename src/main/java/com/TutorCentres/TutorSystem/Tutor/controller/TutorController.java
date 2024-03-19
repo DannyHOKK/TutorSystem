@@ -94,5 +94,33 @@ public class TutorController {
         }
     }
 
+    @PreAuthorize("hasRole('TUTOR')")
+    @PostMapping("/rejectStudentMatching")
+    public ResultVO rejectStudentMatching(@RequestParam("studentMatchId") Integer studentMatchId){
+        try{
+            String errMsg = tutorUserService.rejectStudentMatching(studentMatchId);
+            if(StringUtils.isNotEmpty(errMsg)){
+                return ResultVoUtil.error(errMsg);
+            }
+            return ResultVoUtil.success("Successfully cancel Student Matching");
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
+
+
+    @PreAuthorize("hasRole('TUTOR')")
+    @PostMapping("/acceptStudentMatching")
+    public ResultVO acceptStudentMatching(@RequestParam("studentMatchId") Integer studentMatchId){
+        try{
+            String errMsg = tutorUserService.acceptStudentMatching(studentMatchId);
+            if(StringUtils.isNotEmpty(errMsg)){
+                return ResultVoUtil.error(errMsg);
+            }
+            return ResultVoUtil.success("Successfully cancel Student Matching");
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
 
 }

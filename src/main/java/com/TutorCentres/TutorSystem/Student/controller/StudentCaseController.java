@@ -63,4 +63,37 @@ public class StudentCaseController {
         }
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/rejectStudentCase")
+    public ResultVO rejectStudentCase (@RequestParam("tutorMatchCaseId") Integer tutorMatchCaseId){
+        try{
+            String errMsg = studentCaseService.rejectStudentCase(tutorMatchCaseId);
+
+            if(StringUtils.isNotEmpty(errMsg)){
+                return ResultVoUtil.error(errMsg);
+            }
+
+            return ResultVoUtil.success("成功拎到學生個案");
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/acceptStudentCase")
+    public ResultVO acceptStudentCase (@RequestParam("tutorMatchCaseId") Integer tutorMatchCaseId){
+        try{
+            String errMsg = studentCaseService.acceptStudentCase(tutorMatchCaseId);
+
+            if(StringUtils.isNotEmpty(errMsg)){
+                return ResultVoUtil.error(errMsg);
+            }
+
+            return ResultVoUtil.success("成功拎到學生個案");
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
+
+
 }

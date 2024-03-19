@@ -48,7 +48,7 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             studentCase.setCreateDate(new Date());
             studentCase.setModifyDate(new Date());
             studentCase.setStudentUser(studentUser);
-            studentCase.setStatus("pending");
+            studentCase.setStatus("new");
             studentCaseRepository.save(studentCase);
             return null;
         }catch (Exception e){
@@ -88,8 +88,9 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             sql.append(" and TUTOR_CATEGORY LIKE :tutorCategory");
         }
         if (!CollectionUtils.isEmpty(tutorContent)) {
-            for (int i = 0; i < tutorContent.size(); i++) {
-                sql.append(" and TUTOR_CONTENT LIKE :tutorContent").append(i);
+            sql.append(" and TUTOR_CONTENT LIKE :tutorContent");
+            for (int i = 1; i < tutorContent.size(); i++) {
+                sql.append(" or TUTOR_CONTENT LIKE :tutorContent").append(i);
             }
         }
         if(StringUtils.isNotEmpty(tutorGender)){
@@ -99,8 +100,9 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             sql.append(" and STUDENT_LEVEL_TYPE LIKE :studentLevelType");
         }
         if (!CollectionUtils.isEmpty(studentLevel)) {
-            for (int i = 0; i < studentLevel.size(); i++) {
-                sql.append(" and STUDENT_LEVEL LIKE :studentLevel").append(i);
+            sql.append(" and STUDENT_LEVEL LIKE :studentLevel");
+            for (int i = 1; i < studentLevel.size(); i++) {
+                sql.append(" or STUDENT_LEVEL LIKE :studentLevel").append(i);
             }
         }
         if (minSalary != null && minSalary > 0) {
@@ -117,7 +119,8 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             query.setParameter("tutorCategory", tutorCategory);
         }
         if (!CollectionUtils.isEmpty(tutorContent)) {
-            for (int i = 0; i < tutorContent.size(); i++) {
+            query.setParameter("tutorContent"  , "%" + tutorContent.get(0) + "%");
+            for (int i = 1; i < tutorContent.size(); i++) {
                 query.setParameter("tutorContent" + i , "%" + tutorContent.get(i) + "%");
             }
         }
@@ -128,7 +131,8 @@ public class StudentCaseServiceImpl implements StudentCaseService {
             query.setParameter("studentLevelType", studentLevelType);
         }
         if (!CollectionUtils.isEmpty(studentLevel)) {
-            for (int i = 0; i < studentLevel.size(); i++) {
+            query.setParameter("studentLevel"  , "%" + studentLevel.get(0) + "%");
+            for (int i = 1; i < studentLevel.size(); i++) {
                 query.setParameter("studentLevel" + i , "%" + studentLevel.get(i) + "%");
             }
         }
@@ -154,5 +158,38 @@ public class StudentCaseServiceImpl implements StudentCaseService {
         return studentCaseMatchingVOS;
     }
 
+    @Override
+    public String rejectStudentCase(Integer tutorMatchCaseId) {
+        try {
+            TutorMatchStudentCase tutorMatchStudentCase = tutorMatchStudentCaseRepository.findById(tutorMatchCaseId).orElseThrow(null);
+            StudentCase studentCase = studentCaseRepository.findById(tutorMatchStudentCase.getStudentCase().getCaseId()).orElseThrow(null);
+            tutorMatchStudentCase.setStatus("rejected");
+            tutorMatchStudentCase.setModifyDate(new Date());
+            tutorMatchStudentCaseRepository.save(tutorMatchStudentCase);
+            studentCase.setStatus("new");
+            studentCaseRepository.save(studentCase);
+            return null;
+        }catch (Exception e){
+            return "無法拒絕導師";
+        }
+
+    }
+
+    @Override
+    public String acceptStudentCase(Integer tutorMatchCaseId) {
+        try {
+            TutorMatchStudentCase tutorMatchStudentCase = tutorMatchStudentCaseRepository.findById(tutorMatchCaseId).orElseThrow(null);
+            StudentCase studentCase = studentCaseRepository.findById(tutorMatchStudentCase.getStudentCase().getCaseId()).orElseThrow(null);
+            tutorMatchStudentCase.setStatus("success");
+            tutorMatchStudentCase.setModifyDate(new Date());
+            studentCase.setStatus("waitAdmin");
+            tutorMatchStudentCaseRepository.save(tutorMatchStudentCase);
+            studentCaseRepository.save(studentCase);
+            return null;
+        }catch (Exception e){
+            return "無法拒絕導師";
+        }
+
+    }
 
 }
