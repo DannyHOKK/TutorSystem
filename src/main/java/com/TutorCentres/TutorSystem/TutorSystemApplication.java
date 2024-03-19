@@ -18,7 +18,6 @@ public class TutorSystemApplication {
 	@PostConstruct
 	public void initTwilio(){
 		Twilio.init(twilioConfig.getAccountSid(),twilioConfig.getAuthToken());
-
 	}
 
 	public static void main(String[] args) {

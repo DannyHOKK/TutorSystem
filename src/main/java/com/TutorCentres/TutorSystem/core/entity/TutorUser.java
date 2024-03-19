@@ -86,9 +86,12 @@ public class TutorUser {
     @Column(name = "intro")
     private String intro;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "open_exam_result")
-    private List<ExamResult> examResult;
+    @Column(name = "exam_result")
+    private String examResult;
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "open_exam_result")
+//    private List<ExamResult> examResult;
 
     // Constructors, getters, and setters
 
@@ -96,7 +99,7 @@ public class TutorUser {
     public TutorUser() {
     }
 
-    public TutorUser(String email, String password, String roles, Date createDate, Date modifyDate, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, String tutorAreas, String tutorContent, String tutorLevel, String tutorSpeaking, String tutorMusic, String tutorOtherLevel, Integer lowestSalary, Integer idealSalary, String introTitle, String intro, List<ExamResult> examResult) {
+    public TutorUser(String email, String password, String roles, Date createDate, Date modifyDate, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, String tutorAreas, String tutorContent, String tutorLevel, String tutorSpeaking, String tutorMusic, String tutorOtherLevel, Integer lowestSalary, Integer idealSalary, String introTitle, String intro, String examResult) {
         this.email = email;
         this.password = password;
         this.roles = roles;
@@ -156,15 +159,8 @@ public class TutorUser {
         this.currentEducationLevel = tutorRegisterDTO.getCurrentEducationLevel();
         this.universityMajor = tutorRegisterDTO.getUniversityMajor();
         this.hkOpenExam = tutorRegisterDTO.getHkOpenExam();
-//        this.tutorAreas = tutorAreas;
-//        this.tutorContent = tutorContent;
-//        this.tutorLevel = tutorLevel;
-//        this.tutorSpeaking = tutorSpeaking;
-//        this.tutorMusic = tutorMusic;
-//        this.tutorOtherLevel = tutorOtherLevel;
         this.lowestSalary = tutorRegisterDTO.getLowestSalary();
         this.idealSalary = tutorRegisterDTO.getIdealSalary();
-//        this.examResult = examResult;
         this.introTitle = tutorRegisterDTO.getIntroTitle();
         this.intro = tutorRegisterDTO.getIntro();
     }
@@ -449,11 +445,12 @@ public class TutorUser {
         this.idealSalary = idealSalary;
     }
 
-    public List<ExamResult> getExamResult() {
+    public String getExamResult() {
         return examResult;
     }
 
-    public void setExamResult(List<ExamResult> examResult) {
+    public void setExamResult(String examResult) {
         this.examResult = examResult;
     }
 }
+

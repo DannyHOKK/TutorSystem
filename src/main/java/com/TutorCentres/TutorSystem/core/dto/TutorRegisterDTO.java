@@ -41,14 +41,14 @@ public class TutorRegisterDTO {
     private List<String> tutorOtherLevel;
     private Integer lowestSalary;
     private Integer idealSalary;
-    private List<ExamResult> examResult;
+    private String examResult;
     private String introTitle;
     private String intro;
 
     public TutorRegisterDTO() {
     }
 
-    public TutorRegisterDTO(String email, String password, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, List<String> tutorAreas, List<String> tutorContent, List<String> tutorLevel, List<String> tutorSpeaking, List<String> tutorMusic, List<String> tutorOtherLevel, Integer lowestSalary, Integer idealSalary, List<ExamResult> examResult, String introTitle, String intro) {
+    public TutorRegisterDTO(String email, String password, String engName, String chineseName, String phone, String hkId, String gender, LocalDate birthYear, String address, String currentJob, String workExperience, String highestTutorLevel, Boolean noteProvided, String highSchoolLang, String highSchool, String highSchoolMajor, String highestEducation, String university, String currentEducationLevel, String universityMajor, String hkOpenExam, List<String> tutorAreas, List<String> tutorContent, List<String> tutorLevel, List<String> tutorSpeaking, List<String> tutorMusic, List<String> tutorOtherLevel, Integer lowestSalary, Integer idealSalary, String examResult, String introTitle, String intro) {
         this.email = email;
         this.password = password;
         this.engName = engName;
@@ -315,11 +315,11 @@ public class TutorRegisterDTO {
         this.idealSalary = idealSalary;
     }
 
-    public List<ExamResult> getExamResult() {
+    public String getExamResult() {
         return examResult;
     }
 
-    public void setExamResult(List<ExamResult> examResult) {
+    public void setExamResult(String examResult) {
         this.examResult = examResult;
     }
 
