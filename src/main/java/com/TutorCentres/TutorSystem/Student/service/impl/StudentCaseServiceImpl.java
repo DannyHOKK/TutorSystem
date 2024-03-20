@@ -61,7 +61,7 @@ public class StudentCaseServiceImpl implements StudentCaseService {
 
         String sqlscript = "select CASE_ID, TUTOR_GENDER, TUTOR_CATEGORY, TUTOR_CONTENT, TUTOR_METHOD, TUTOR_REMARK, GENDER," +
                 "STUDENT_LEVEL, STUDENT_LEVEL_TYPE , MAX_SALARY, MIN_SALARY, ADDRESS, DETAILS_ADDRESS," +
-                " LESSON_PER_WEEK, LESSON_DURATION, TIMESLOT, TUTOR_REQUEST, CLOSE from student_case " +
+                " LESSON_PER_WEEK, LESSON_DURATION, TIMESLOT, TUTOR_REQUEST from student_case " +
                 "where 1 = 1 ";
         StringBuilder sql = new StringBuilder(sqlscript);
 
