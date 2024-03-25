@@ -37,9 +37,9 @@ public class LoginController {
             }
             JwtResponseDTO jwtResponseDTO = loginService.studentTutorLogin(userLoginDTO);
             if (ObjectUtils.isEmpty(jwtResponseDTO)){
-                return ResultVoUtil.error("User not found");
+                return ResultVoUtil.error("登入名稱/密碼錯誤");
             }
-            return ResultVoUtil.success("login successfully", jwtResponseDTO);
+            return ResultVoUtil.success("登入成功", jwtResponseDTO);
         }catch (Exception e){
             return ResultVoUtil.error(e);
         }

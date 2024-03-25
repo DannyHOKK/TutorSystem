@@ -110,4 +110,12 @@ public class StudentUserServiceImpl implements StudentUserService {
             return "cancel Student Matching Tutor Case failed";
         }
     }
+
+    @Override
+    public StudentUser getStudentById() {
+        StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        StudentUser studentUser = studentRepository.findById(studentUserDetail.getId()).orElseThrow(null);
+        return studentUser;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.TutorCentres.TutorSystem.Student.controller;
 import com.TutorCentres.TutorSystem.Student.service.StudentUserService;
 import com.TutorCentres.TutorSystem.core.dto.StudentMatchTutorDTO;
 import com.TutorCentres.TutorSystem.core.entity.StudentMatchTutor;
+import com.TutorCentres.TutorSystem.core.entity.StudentUser;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
 import org.apache.commons.lang3.ObjectUtils;
@@ -63,5 +64,20 @@ public class StudentController {
             return ResultVoUtil.error(e);
         }
     }
+
+    @PreAuthorize("hasRole('STUDENT')")
+    @GetMapping("/getStudentById")
+    public ResultVO getStudentById(){
+        try{
+            StudentUser studentUser = studentUserService.getStudentById();
+            if (ObjectUtils.isEmpty(studentUser)){
+                return ResultVoUtil.error("獲取學生資料失敗");
+            }
+            return ResultVoUtil.success(studentUser);
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
+
 
 }

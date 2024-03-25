@@ -34,6 +34,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             return studentUser;
         }
 
-        throw new UsernameNotFoundException("User not found");
+        throw new UsernameNotFoundException("找不到用戶");
     }
 }
