@@ -4,13 +4,9 @@ import com.TutorCentres.TutorSystem.Student.repository.StudentMatchTutorReposito
 import com.TutorCentres.TutorSystem.Student.repository.StudentRepository;
 import com.TutorCentres.TutorSystem.Student.service.StudentUserService;
 import com.TutorCentres.TutorSystem.Tutor.repository.TutorRepository;
-import com.TutorCentres.TutorSystem.core.dto.StudentMatchTutorDTO;
-import com.TutorCentres.TutorSystem.core.dto.StudentRegisterDTO;
-import com.TutorCentres.TutorSystem.core.dto.StudentUserDetail;
-import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
+import com.TutorCentres.TutorSystem.core.dto.*;
 import com.TutorCentres.TutorSystem.core.entity.StudentMatchTutor;
 import com.TutorCentres.TutorSystem.core.entity.StudentUser;
-import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -116,6 +112,25 @@ public class StudentUserServiceImpl implements StudentUserService {
         StudentUserDetail studentUserDetail = (StudentUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         StudentUser studentUser = studentRepository.findById(studentUserDetail.getId()).orElseThrow(null);
         return studentUser;
+    }
+
+    @Override
+    public String modifyStudentDetails(ModifyStudentDetailsDTO modifyStudentDetailsDTO) {
+
+        try {
+            StudentUser studentUser = studentRepository.findAllByEmail(modifyStudentDetailsDTO.getEmail());
+
+            studentUser.setEngName(modifyStudentDetailsDTO.getEngName());
+            studentUser.setChineseName(modifyStudentDetailsDTO.getChineseName());
+            studentUser.setAddress(modifyStudentDetailsDTO.getAddress());
+            studentUser.setGender(modifyStudentDetailsDTO.getGender());
+
+            studentRepository.save(studentUser);
+            return null;
+        }catch (Exception e){
+            return "更改學生資料失敗";
+        }
+
     }
 
 }

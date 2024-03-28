@@ -7,6 +7,7 @@ import com.TutorCentres.TutorSystem.core.entity.TutorListMappingEntity;
 import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
+import com.TutorCentres.TutorSystem.core.vo.PageListVO;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class TutorController {
     @PostMapping("/getTutorList")
     public ResultVO getTutorList(@RequestBody TutorSearchDTO tutorSearchDTO){
         try{
-            List<TutorListMappingEntity> tutorUserVO = tutorUserService.queryTutorList(tutorSearchDTO);
-            return ResultVoUtil.success(tutorUserVO);
+            PageListVO pageListVO = tutorUserService.queryTutorList(tutorSearchDTO);
+            return ResultVoUtil.success(pageListVO);
         }catch (Exception e){
             return ResultVoUtil.error(e);
         }

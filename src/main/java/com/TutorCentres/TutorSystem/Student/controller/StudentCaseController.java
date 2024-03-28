@@ -5,6 +5,7 @@ import com.TutorCentres.TutorSystem.core.dto.StudentCaseDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentCaseSearchDTO;
 import com.TutorCentres.TutorSystem.core.entity.StudentCaseMappingEntity;
 import com.TutorCentres.TutorSystem.core.utils.ResultVoUtil;
+import com.TutorCentres.TutorSystem.core.vo.PageListVO;
 import com.TutorCentres.TutorSystem.core.vo.ResultVO;
 import com.TutorCentres.TutorSystem.core.vo.StudentCaseMatchingVO;
 import org.apache.commons.lang3.StringUtils;
@@ -40,7 +41,7 @@ public class StudentCaseController {
     @PostMapping("/getStudentCaseList")
     public ResultVO getStudentCaseList (@RequestBody StudentCaseSearchDTO studentCaseSearchDTO){
         try{
-            List<StudentCaseMappingEntity> studentCaseList = studentCaseService.getStudentCaseList(studentCaseSearchDTO);
+            PageListVO studentCaseList = studentCaseService.getStudentCaseList(studentCaseSearchDTO);
 //            if (CollectionUtils.isEmpty(studentCaseList)){
 //                return ResultVoUtil.error("get student case error");
 //            }

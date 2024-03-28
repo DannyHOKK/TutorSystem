@@ -10,6 +10,8 @@ import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorSearchDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorUserDetail;
 import com.TutorCentres.TutorSystem.core.entity.*;
+import com.TutorCentres.TutorSystem.core.vo.PageListVO;
+import com.TutorCentres.TutorSystem.core.vo.PaginationVO;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -88,7 +91,132 @@ public class TutorUserServiceImpl implements TutorUserService {
     }
 
     @Override
-    public List<TutorListMappingEntity> queryTutorList( TutorSearchDTO tutorSearchDTO) {
+    public PageListVO queryTutorList(TutorSearchDTO tutorSearchDTO) {
+
+        if (tutorSearchDTO.getPageSize() <= 0){
+            tutorSearchDTO.setPageSize(10);
+        }
+        if (tutorSearchDTO.getCurrentPage() <= 0){
+            tutorSearchDTO.setPageSize(1);
+        }
+
+        long startIndex = (tutorSearchDTO.getCurrentPage() - 1) * tutorSearchDTO.getPageSize() + 1;
+        long endIndex = tutorSearchDTO.getPageSize() * tutorSearchDTO.getCurrentPage();
+
+        String sqlscript = "select ID, ENG_NAME, GENDER, TUTOR_CONTENT, TUTOR_LEVEL,TUTOR_MUSIC_LEVEL, " +
+                "TUTOR_SPEAKING_LEVEL, TUTOR_OTHER_LEVEL, TUTOR_AREAS, LOWEST_SALARY, UNIVERSITY, " +
+                "HIGHEST_EDUCATION, HIGHEST_TUTOR_LEVEL, UNIVERSITY_MAJOR, INTRO_TITLE, INTRO" +
+                " from ( select ROW_NUMBER() OVER () AS SEQ_NO, t.* from tutor_user t )ts  " +
+                " where ts.SEQ_NO >= :startIndex and ts.SEQ_NO <= :endIndex ";
+        StringBuilder sql = new StringBuilder(sqlscript);
+
+        List<String> tutorContent = null;
+        List<String> tutorAreas = null;
+        List<String> tutorLevel = null;
+        Integer lowestSalary = null;
+        Integer maxSalary = null;
+
+        if (ObjectUtils.isNotEmpty(tutorSearchDTO)) {
+            tutorContent = tutorSearchDTO.getTutorContent();
+            tutorAreas = tutorSearchDTO.getTutorAreas();
+            tutorLevel = tutorSearchDTO.getTutorLevel();
+            lowestSalary = tutorSearchDTO.getLowestSalary();
+            maxSalary = tutorSearchDTO.getMaxSalary();
+        }
+//        sql.append(" WHERE 1=1 ");
+        if (!CollectionUtils.isEmpty(tutorContent)) {
+            sql.append(" and TUTOR_CONTENT LIKE :tutorContent");
+            for (int i = 1; i < tutorContent.size(); i++) {
+                sql.append(" or TUTOR_CONTENT LIKE :tutorContent").append(i);
+            }
+        }
+        if (!CollectionUtils.isEmpty(tutorAreas)) {
+            sql.append(" and TUTOR_AREAS LIKE :tutorAreas");
+            for (int i = 1; i < tutorAreas.size(); i++) {
+                sql.append(" or TUTOR_AREAS LIKE :tutorAreas").append(i);
+            }
+        }
+        if (!CollectionUtils.isEmpty(tutorLevel)) {
+            sql.append(" and TUTOR_LEVEL LIKE :tutorLevel");
+            for (int i = 1; i < tutorLevel.size(); i++) {
+                sql.append(" or TUTOR_LEVEL LIKE :tutorLevel").append(i);
+            }
+        }
+        if (lowestSalary != null && lowestSalary > 0) {
+            sql.append(" and LOWEST_SALARY >= :lowestSalary");
+        }
+        if (maxSalary != null && maxSalary > 0) {
+            sql.append(" and LOWEST_SALARY <= :maxSalary");
+        }
+
+        Query query = entityManager.createNativeQuery(sql.toString(), "TutorListMappingEntity");
+
+        if (!CollectionUtils.isEmpty(tutorContent)) {
+            query.setParameter("tutorContent" , "%" + tutorContent.get(0) + "%");
+            for (int i = 1; i < tutorContent.size(); i++) {
+                query.setParameter("tutorContent" + i , "%" + tutorContent.get(i) + "%");
+            }
+        }
+        if (!CollectionUtils.isEmpty(tutorAreas)) {
+            query.setParameter("tutorAreas"  , "%" + tutorAreas.get(0) + "%");
+            for (int i = 1; i < tutorAreas.size(); i++) {
+                query.setParameter("tutorAreas" + i , "%" + tutorAreas.get(i) + "%");
+            }
+        }
+        if (!CollectionUtils.isEmpty(tutorLevel)) {
+            query.setParameter("tutorLevel", "%" + tutorLevel.get(0) + "%");
+            for (int i = 1; i < tutorLevel.size(); i++) {
+                query.setParameter("tutorLevel" + i, "%" + tutorLevel.get(i) + "%");
+            }
+        }
+
+        if(lowestSalary != null && lowestSalary > 0){
+            query.setParameter("lowestSalary", lowestSalary);
+        }
+        if(maxSalary != null && maxSalary > 0){
+            query.setParameter("maxSalary", maxSalary);
+        }
+
+        query.setParameter("startIndex",startIndex);
+        query.setParameter("endIndex" , endIndex);
+
+
+        List<TutorListMappingEntity> tutorListMappingEntities = query.getResultList();
+
+        List<TutorListMappingEntity> allTutorList = queryAllTutorList(tutorSearchDTO);
+
+
+
+        PageListVO pageListVO = new PageListVO();
+        if (!CollectionUtils.isEmpty(tutorListMappingEntities)){
+//            List<CityListMappingEntity> list = applist.stream().map(item ->{
+//                CityListMappingEntity entity = new CityListMappingEntity();
+//                entity.setCityCd(item.getCityCd());
+//                entity.setCountryCd(item.getCountryCd());
+//                entity.setEngCityDesc(item.getEngCityDesc());
+//                return entity;
+//            }).collect(Collectors.toList());
+
+            pageListVO.setList(tutorListMappingEntities);
+            PaginationVO paginationVO = new PaginationVO();
+            paginationVO.setTotal(allTutorList.size());
+            paginationVO.setPageSize(tutorSearchDTO.getPageSize());
+            paginationVO.setCurrentPage(tutorSearchDTO.getCurrentPage());
+            pageListVO.setPagination(paginationVO);
+        }else {
+            pageListVO.setList(new ArrayList());
+            PaginationVO paginationVO = new PaginationVO();
+            paginationVO.setTotal(0);
+            paginationVO.setPageSize(tutorSearchDTO.getPageSize());
+            paginationVO.setCurrentPage(1L);
+        }
+
+
+        return pageListVO;
+
+    }
+
+    public List<TutorListMappingEntity> queryAllTutorList(TutorSearchDTO tutorSearchDTO){
 
         String sqlscript = "select ID, ENG_NAME, GENDER, TUTOR_CONTENT, TUTOR_LEVEL,TUTOR_MUSIC_LEVEL, TUTOR_SPEAKING_LEVEL, TUTOR_OTHER_LEVEL, TUTOR_AREAS, LOWEST_SALARY, UNIVERSITY, HIGHEST_EDUCATION, HIGHEST_TUTOR_LEVEL, UNIVERSITY_MAJOR, INTRO_TITLE, INTRO" +
                 " from tutor_user ";
@@ -164,7 +292,6 @@ public class TutorUserServiceImpl implements TutorUserService {
 
         List<TutorListMappingEntity> tutorListMappingEntities = query.getResultList();
         return tutorListMappingEntities;
-
     }
 
     @Override

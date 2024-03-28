@@ -30,6 +30,7 @@ import java.util.List;
 public class TutorListMappingEntity implements Serializable {
 
     @Id
+    @Column(name = "ID")
     private Integer id;
     @Column(name = "ENG_NAME")
     private String engName;
@@ -64,6 +65,14 @@ public class TutorListMappingEntity implements Serializable {
 
 
     public TutorListMappingEntity() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTutorMusicLevel() {
@@ -128,14 +137,6 @@ public class TutorListMappingEntity implements Serializable {
 
     public void setTutorLevel(String tutorLevel) {
         this.tutorLevel = tutorLevel;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getEngName() {

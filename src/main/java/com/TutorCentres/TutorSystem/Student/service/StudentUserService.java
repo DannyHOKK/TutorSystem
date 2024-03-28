@@ -1,6 +1,7 @@
 package com.TutorCentres.TutorSystem.Student.service;
 
 
+import com.TutorCentres.TutorSystem.core.dto.ModifyStudentDetailsDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentMatchTutorDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentRegisterDTO;
 import com.TutorCentres.TutorSystem.core.entity.StudentMatchTutor;
@@ -18,4 +19,6 @@ public interface StudentUserService {
     String cancelMatchingTutor(Integer caseId);
 
     StudentUser getStudentById();
+
+    String modifyStudentDetails(ModifyStudentDetailsDTO modifyStudentDetailsDTO);
 }

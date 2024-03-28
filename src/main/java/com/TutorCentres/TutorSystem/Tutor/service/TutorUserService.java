@@ -3,16 +3,16 @@ package com.TutorCentres.TutorSystem.Tutor.service;
 import com.TutorCentres.TutorSystem.core.dto.TutorRegisterDTO;
 import com.TutorCentres.TutorSystem.core.dto.TutorSearchDTO;
 import com.TutorCentres.TutorSystem.core.entity.StudentMatchTutor;
-import com.TutorCentres.TutorSystem.core.entity.TutorListMappingEntity;
 import com.TutorCentres.TutorSystem.core.entity.TutorMatchStudentCase;
 import com.TutorCentres.TutorSystem.core.entity.TutorUser;
+import com.TutorCentres.TutorSystem.core.vo.PageListVO;
 
 import java.util.List;
 
 public interface TutorUserService {
     String signUp(TutorRegisterDTO tutorUser);
 
-    List<TutorListMappingEntity> queryTutorList(TutorSearchDTO tutorSearchDTO);
+    PageListVO queryTutorList(TutorSearchDTO tutorSearchDTO);
 
     TutorUser getTutorById(Integer tutorId);
 

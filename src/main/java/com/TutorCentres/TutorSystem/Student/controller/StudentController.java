@@ -1,6 +1,7 @@
 package com.TutorCentres.TutorSystem.Student.controller;
 
 import com.TutorCentres.TutorSystem.Student.service.StudentUserService;
+import com.TutorCentres.TutorSystem.core.dto.ModifyStudentDetailsDTO;
 import com.TutorCentres.TutorSystem.core.dto.StudentMatchTutorDTO;
 import com.TutorCentres.TutorSystem.core.entity.StudentMatchTutor;
 import com.TutorCentres.TutorSystem.core.entity.StudentUser;
@@ -56,9 +57,6 @@ public class StudentController {
     public ResultVO getStudentMatching(){
         try{
             List<StudentMatchTutor> studentMatchTutors = studentUserService.getStudentMatching();
-            if (ObjectUtils.isEmpty(studentMatchTutors)){
-                return ResultVoUtil.error("get Student Matching Tutor Table failed");
-            }
             return ResultVoUtil.success("Successfully get Student Matching Tutor", studentMatchTutors);
         }catch (Exception e){
             return ResultVoUtil.error(e);
@@ -79,5 +77,18 @@ public class StudentController {
         }
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
+    @PostMapping("/modifyStudentDetails")
+    public ResultVO modifyStudentDetails(@RequestBody ModifyStudentDetailsDTO modifyStudentDetailsDTO){
+        try{
+            String errMsg = studentUserService.modifyStudentDetails(modifyStudentDetailsDTO);
+            if (StringUtils.isNotEmpty(errMsg)){
+                return ResultVoUtil.error(errMsg);
+            }
+            return ResultVoUtil.success("成功更改學生資料");
+        }catch (Exception e){
+            return ResultVoUtil.error(e);
+        }
+    }
 
 }

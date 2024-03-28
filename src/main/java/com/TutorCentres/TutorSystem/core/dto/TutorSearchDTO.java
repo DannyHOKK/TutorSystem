@@ -1,8 +1,10 @@
 package com.TutorCentres.TutorSystem.core.dto;
 
+import com.TutorCentres.TutorSystem.core.vo.Pagination;
+
 import java.util.List;
 
-public class TutorSearchDTO {
+public class TutorSearchDTO extends Pagination {
     private List<String> tutorContent;
     private List<String> tutorAreas;
     private List<String> tutorLevel;

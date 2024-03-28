@@ -1,8 +1,10 @@
 package com.TutorCentres.TutorSystem.core.dto;
 
+import com.TutorCentres.TutorSystem.core.vo.Pagination;
+
 import java.util.List;
 
-public class StudentCaseSearchDTO {
+public class StudentCaseSearchDTO extends Pagination {
 
     private String tutorCategory;
     private List<String> tutorContent;
